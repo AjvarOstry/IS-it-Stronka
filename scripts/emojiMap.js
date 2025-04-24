@@ -170,7 +170,27 @@ const emojiMap = {
   ':pineapple:': '🍍',
   ':eggplant:': '🍆',
   ':tomato:': '🍅',
-  ':corn:': '🌽'
+  ':corn:': '🌽',
+  ':arrow_down:': '↓', 
+  ':arrow_up:': '↑', 
+  ':arrow_left:': '←', 
+  ':arrow_right:': '→', 
+  ':arrow_upper_left:': '↖',
+  ':arrow_upper_right:': '↗', 
+  ':arrow_lower_left:': '↙', 
+  ':arrow_lower_right:': '↘', 
+  ':leftwards_arrow_with_hook:': '↩', 
+  ':arrow_right_hook:': '↪', 
+  ':left_right_arrow:': '↔', 
+  ':arrow_up_down:': '↕', 
+  ':arrow_forward:': '▶', 
+  ':arrow_backward:': '◀', 
+  ':fast_forward:': '⏩', 
+  ':rewind:': '⏪', 
+  ':arrow_double_up:': '⏫', 
+  ':arrow_double_down:': '⏬', 
+  ':arrows_clockwise:': '🔃', 
+  ':arrows_counterclockwise:': '🔄', 
 };
 
 // Eksport mapy dla użycia w innych plikach
