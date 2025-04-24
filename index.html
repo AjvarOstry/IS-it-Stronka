@@ -59,22 +59,23 @@
             // Pobierz wszystkie linki z atrybutem data-md-file
             const links = document.querySelectorAll('.menu a[data-md-file]');
             links.forEach(link => {
-              link.addEventListener('click', (e) => {
-                e.preventDefault(); // Zapobiegaj domyślnemu działaniu linku
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
                 const mdFile = link.getAttribute('data-md-file');
                 fetch(mdFile)
-                  .then(response => {
+                .then(response => {
                     if (!response.ok) throw new Error('Nie można wczytać pliku');
                     return response.text();
-                  })
-                  .then(text => {
-                    // Renderuj Markdown w <article>
-                    document.getElementById('md-screen').innerHTML = marked.parse(text);
-                  })
-                  .catch(error => {
+                })
+                .then(text => {
+                    // Renderuj Markdown z emotikonami
+                    const renderedText = renderEmojis(marked.parse(text));
+                    document.getElementById('md-screen').innerHTML = renderedText;
+                })
+                .catch(error => {
                     document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
-                  });
-              });
+                });
+            });
             });
           </script>
 
