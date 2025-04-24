@@ -87,6 +87,11 @@ Sprawdź obsługę emotikonek z `emojiMap.js`:
 - Strzałki: :arrow_down: :arrow_up: :arrow_left: :arrow_right:
 - Inne: :fire: :star: :tada:
 
+## Tickboxy
+
+- [ ] - pusty
+- [X] - zaznaczony
+
 ## Podsumowanie
 
 Ten plik testuje większość funkcjonalności Markdown. Sprawdź, jak renderują się style z `markdown.scss` i emotikony z `emojiMap.js`. Jeśli coś nie działa, otwórz konsolę (F12) i sprawdź błędy! :arrow_forward:

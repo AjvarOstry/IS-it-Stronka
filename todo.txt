@@ -6,10 +6,8 @@ TODO:
 
   Markdown:
     - dodać obsługę:
-      - wcięć akapitów
-      - odstępów między akapitami
-      - cytatów
+      - fajne tabele
+      - linki
     - sprawdzić:
       - obsługę tickboxów
-      - obsługę zdjęć i ich skalowania
     - dodać więcej stron
