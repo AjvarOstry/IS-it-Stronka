@@ -8,6 +8,7 @@ TODO:
     - dodać obsługę:
       - fajne tabele
       - linki
+      - przezroczystość do bloków kodu, może i górna ramka
     - sprawdzić:
       - obsługę tickboxów
     - dodać więcej stron
