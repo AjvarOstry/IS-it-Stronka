@@ -190,7 +190,22 @@ const emojiMap = {
   ':arrow_double_up:': '⏫', 
   ':arrow_double_down:': '⏬', 
   ':arrows_clockwise:': '🔃', 
-  ':arrows_counterclockwise:': '🔄', 
+  ':arrows_counterclockwise:': '🔄',
+  ':label:': '🏷️',
+  ':page_facing_up:': '📄',
+  ':gear:': '⚙️',
+  ':bookmark:': '🔖',
+  ':page_with_curl:': '📃',
+  ':memo:': '📝',
+  ':clipboard:': '📋',
+  ':pushpin:': '📌',
+  ':paperclip:': '📎',
+  ':file_folder:': '📁',
+  ':open_file_folder:': '📂',
+  ':briefcase:': '💼',
+  ':card_file_box:': '🗃️',
+  ':file_cabinet:': '🗄️',
+  ':wastebasket:': '🗑️' 
 };
 
 // Eksport mapy dla użycia w innych plikach
