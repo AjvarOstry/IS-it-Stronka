@@ -12,9 +12,9 @@
     
         // Cytaty
         blockquote {
-            background-color: #2a2a2a;
-            border-left: 4px solid #666; // Szary pasek
-            border-radius: 10px;
+            background-color: #aaaaff10;
+            border-left: 4px solid #aaaaff20; // Szary pasek
+            //border-radius: 10px;
             margin: 15px 0;
             padding: 10px 15px;
             color: #999; 
@@ -48,22 +48,27 @@
     
         // Kod inline
         code {
-            background-color: #ffffff10; // Lekko przezroczyste tło
-            border-radius: 10px;
+            background-color: #ffffff05; // Lekko przezroczyste tło
+            border-radius: 4px;
             padding: 2px 4px;
             color: #f0f0f0; // Jasny tekst dla kodu
         }
     
         // Bloki kodu
         pre {
-            background-color: #1a1a1a; // Ciemne tło dla bloków kodu
+            background-color: #1a1a2a; // Ciemne tło dla bloków kodu
             padding: 10px;
-            border-radius: 4px;
+            border-radius: 10px;
             overflow-x: auto; // Scroll dla długich linii kodu
             margin: 15px 0;
         }
         pre code {
             background-color: transparent; // Bez dodatkowego tła w pre>code
             padding: 0;
+        }
+
+        //Pogrubienie
+        b {
+            color: #bbb;
         }
     }
