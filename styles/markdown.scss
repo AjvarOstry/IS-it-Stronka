@@ -67,6 +67,36 @@
             padding: 0;
         }
 
+                // Style dla checkboxów
+        input[type="checkbox"] {
+            display: none; // Ukrywamy domyślny checkbox
+
+            // Niestandardowy checkbox dla li
+            + li::before {
+                content: '';
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                border: 2px solid #666; // Szara ramka
+                background-color: #ffffff10; // Lekko przezroczyste tło
+                border-radius: 3px;
+                margin-right: 8px;
+                vertical-align: middle; // Wyrównanie z tekstem
+                position: relative;
+                top: -2px; // Delikatne przesunięcie w górę dla lepszego wyrównania
+            }
+
+            // Styl dla zaznaczonych checkboxów
+            &:checked + li::before {
+                background-color: #666; // Wypełnienie dla zaznaczonego
+                content: '✔'; // Symbol zaznaczenia
+                color: #ddd; // Jasny kolor znacznika
+                font-size: 10px;
+                line-height: 14px;
+                text-align: center;
+            }
+        }
+
         //Pogrubienie
         b {
             color: #bbb;
