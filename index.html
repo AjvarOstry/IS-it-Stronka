@@ -11,7 +11,7 @@
 
     <body>
         <header>
-            <h1>Notateczki jakotakie</h1>
+            <h1>IS it?</h1>
         </header>
         
         <section>
@@ -56,27 +56,36 @@
             breaks: true,
             });
 
-            // Pobierz wszystkie linki z atrybutem data-md-file
-            const links = document.querySelectorAll('.menu a[data-md-file]');
-            links.forEach(link => {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const mdFile = link.getAttribute('data-md-file');
-                fetch(mdFile)
-                .then(response => {
-                    if (!response.ok) throw new Error('Nie można wczytać pliku');
-                    return response.text();
-                })
-                .then(text => {
-                    // Renderuj Markdown z emotikonami
-                    const renderedText = renderEmojis(marked.parse(text));
-                    document.getElementById('md-screen').innerHTML = renderedText;
-                })
-                .catch(error => {
-                    document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
-                });
-            });
-            });
+             // Funkcja do wczytywania Markdown
+    function loadMarkdown(file) {
+      fetch(file)
+        .then(response => {
+          if (!response.ok) throw new Error('Nie można wczytać pliku');
+          return response.text();
+        })
+        .then(text => {
+          const renderedText = renderEmojis(marked.parse(text));
+          document.getElementById('md-screen').innerHTML = renderedText;
+        })
+        .catch(error => {
+          document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
+        });
+    }
+
+    // Wczytaj domyślny plik po załadowaniu strony
+    window.onload = () => {
+      loadMarkdown('docs/home.md');
+    };
+
+    // Pobierz wszystkie linki z atrybutem data-md-file
+    const links = document.querySelectorAll('.menu a[data-md-file]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mdFile = link.getAttribute('data-md-file');
+        loadMarkdown(mdFile);
+      });
+    });
           </script>
 
     </body>
