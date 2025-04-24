@@ -1,0 +1,15 @@
+TODO:
+
+  Style:
+    - zmienić kolor scrolla
+    - dodać jakąś ładną grafikę na header, może w tło
+
+  Markdown:
+    - dodać obsługę:
+      - wcięć akapitów
+      - odstępów między akapitami
+      - cytatów
+    - sprawdzić:
+      - obsługę tickboxów
+      - obsługę zdjęć i ich skalowania
+    - dodać więcej stron
