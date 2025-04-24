@@ -1,0 +1,69 @@
+// Style dla elementów Markdown w <article id="md-screen">
+#md-screen {
+        // Podstawowe style dla artykułu
+        padding-top: 30px;
+        padding-left: 30px;
+    
+        // Akapity
+        p {
+            margin: 0 0 15px 0; // Odstęp pod akapitami
+            line-height: 1.5; 
+        }
+    
+        // Cytaty
+        blockquote {
+            background-color: #2a2a2a;
+            border-left: 4px solid #666; // Szary pasek
+            border-radius: 10px;
+            margin: 15px 0;
+            padding: 10px 15px;
+            color: #999; 
+        }
+    
+        // Nagłówki
+        h1, h2, h3, h4, h5, h6 {
+        margin: 20px 0 10px 0; // Odstępy nad i pod nagłówkami
+        color: #ddd; // Jaśniejszy kolor dla nagłówków
+        }
+        h1 {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        h3 {
+            font-size: 18px;
+        }
+    
+        // Listy
+        ul, ol {
+            margin: 15px 0; // Odstępy wokół list
+            padding-left: 30px; // Wcięcie dla punktorów
+        }
+        li {
+        margin-bottom: 8px; // Odstęp między elementami listy
+        }
+    
+        // Kod inline
+        code {
+            background-color: #ffffff10; // Lekko przezroczyste tło
+            border-radius: 10px;
+            padding: 2px 4px;
+            color: #f0f0f0; // Jasny tekst dla kodu
+        }
+    
+        // Bloki kodu
+        pre {
+            background-color: #1a1a1a; // Ciemne tło dla bloków kodu
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto; // Scroll dla długich linii kodu
+            margin: 15px 0;
+        }
+        pre code {
+            background-color: transparent; // Bez dodatkowego tła w pre>code
+            padding: 0;
+        }
+    }
