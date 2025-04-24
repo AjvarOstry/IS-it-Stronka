@@ -5,6 +5,7 @@
         <title>IS-it-notateczki</title>
         <link rel="stylesheet" href="./styles/structure.min.css">
         <link rel="stylesheet" href="./styles/design.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
 
     <body>
@@ -16,26 +17,53 @@
             <nav class="box">
                 
                 <ul class="menu">
-                    <li> > Strona główna</li>
+                    <li> <a href="#" data-md-file="docs/home.md"> > Strona główna</a></li>
+                    <hr>
                     <li>Semestr 1</li>
                     <li class="ma-podmenu">
                         <a href="#">Semestr 2</a>
                         <ul class="podmenu">
-                            <li>Git</li>
-                            <li>SysOdpowiedzi</li>
+                            <li><a href="#" data-md-file="./docs/Sem2/git-komendy.md">Git</a></li>
+                            <li><a href="#" data-md-file="docs/sysodpowiedzi.md">SysOdpowiedzi</a></li>
                         </ul>
 
                     </li>
                         
                     <li>Semestr 3</li>
+                    <hr>
+                    <li>Różne takie</li>
                 </ul>
                 
             </nav>
 
-            <article class="box">
-                ...
+            <article id="md-screen" class="box">
+                
             </article>
         </section>
+
+
+        <script>
+            // Pobierz wszystkie linki z atrybutem data-md-file
+            const links = document.querySelectorAll('.menu a[data-md-file]');
+            links.forEach(link => {
+              link.addEventListener('click', (e) => {
+                e.preventDefault(); // Zapobiegaj domyślnemu działaniu linku
+                const mdFile = link.getAttribute('data-md-file');
+                fetch(mdFile)
+                  .then(response => {
+                    if (!response.ok) throw new Error('Nie można wczytać pliku');
+                    return response.text();
+                  })
+                  .then(text => {
+                    // Renderuj Markdown w <article>
+                    document.getElementById('md-screen').innerHTML = marked.parse(text);
+                  })
+                  .catch(error => {
+                    document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
+                  });
+              });
+            });
+          </script>
 
     </body>
 </html>
