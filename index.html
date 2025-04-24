@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="./styles/structure.min.css">
         <link rel="stylesheet" href="./styles/design.min.css">
         <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+        <script src="./scripts/emojiMap.js"></script>
     </head>
 
     <body>
@@ -43,6 +44,18 @@
 
 
         <script>
+
+            // Funkcja zamiany shortcodes na emoji
+            function renderEmojis(text) {
+            return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
+            }
+
+            // Konfiguracja Marked z GFM
+            marked.setOptions({
+            gfm: true,
+            breaks: true,
+            });
+
             // Pobierz wszystkie linki z atrybutem data-md-file
             const links = document.querySelectorAll('.menu a[data-md-file]');
             links.forEach(link => {
