@@ -95,3 +95,28 @@
 #md-screen b {
   color: #bbb;
 }
+
+#md-screen .hljs {
+  background: transparent;
+  color: #ddd;
+}
+
+#md-screen .hljs-keyword, #md-screen .hljs-selector-tag, #md-screen .hljs-built_in {
+  color: #ff79c6;
+}
+
+#md-screen .hljs-string, #md-screen .hljs-regexp {
+  color: #f1fa8c;
+}
+
+#md-screen .hljs-number, #md-screen .hljs-literal {
+  color: #bd93f9;
+}
+
+#md-screen .hljs-comment {
+  color: #6272a4;
+}
+
+#md-screen .hljs-function, #md-screen .hljs-title {
+  color: #50fa7b;
+}

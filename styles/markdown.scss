@@ -101,4 +101,25 @@
         b {
             color: #bbb;
         }
+
+        // Dostosowanie kolorów highlight.js do Twojego motywu
+        .hljs {
+            background: transparent; // Usuwamy domyślne tło monokai, bo pre ma #1a1a1a
+            color: #ddd; // Jasny kolor tekstu
+        }
+        .hljs-keyword, .hljs-selector-tag, .hljs-built_in {
+            color: #ff79c6; // Różowy dla słów kluczowych (np. echo, function)
+        }
+        .hljs-string, .hljs-regexp {
+            color: #f1fa8c; // Żółty dla stringów
+        }
+        .hljs-number, .hljs-literal {
+            color: #bd93f9; // Fioletowy dla liczb
+        }
+        .hljs-comment {
+            color: #6272a4; // Szary dla komentarzy
+        }
+        .hljs-function, .hljs-title {
+            color: #50fa7b; // Zielony dla nazw funkcji
+        }
     }
