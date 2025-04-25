@@ -2,11 +2,10 @@ TODO:
 
   Style:
     - zmienić kolor scrolla
-    - dodać jakąś ładną grafikę na header, może w tło
+    - dodać jakąś ładną grafikę na header, może w tło - PIXEELARTOWY PATTERN
 
   Markdown:
     - dodać obsługę:
-      - fajne tabele
       - przezroczystość do bloków kodu, może i górna ramka
     - sprawdzić:
       - obsługę tickboxów
