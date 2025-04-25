@@ -102,6 +102,17 @@
             color: #bbb;
         }
 
+        a {
+            text-decoration: none;
+            color: #99e;
+        }
+        a:hover {
+            color: #aaf;
+        }
+        a:visited {
+            color: #b9e;
+        }
+
         // Dostosowanie kolorów highlight.js do Twojego motywu
         .hljs {
             background: transparent; // Usuwamy domyślne tło monokai, bo pre ma #1a1a1a

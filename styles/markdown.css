@@ -96,6 +96,19 @@
   color: #bbb;
 }
 
+#md-screen a {
+  text-decoration: none;
+  color: #99e;
+}
+
+#md-screen a:hover {
+  color: #aaf;
+}
+
+#md-screen a:visited {
+  color: #b9e;
+}
+
 #md-screen .hljs {
   background: transparent;
   color: #ddd;
