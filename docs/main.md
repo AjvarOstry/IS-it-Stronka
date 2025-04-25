@@ -5,4 +5,4 @@ Zakładam, że skoro tu jesteś, także wylądowałxś w tym bagnie. Jak jeszcze
 
 Na tej stronce zebrałem różne(znając siebie pojedyncze) notateczki, które może ułatwią komuś poza mną przetrwanie w tym opuszczonym przez Bozię miejsce, więc **bierzcie i jedzcie z tego wszyscy**
 
-A i jeszcze jedno. Jak ta stronka trafiła w twoje ręce, to weź sobie daruj jesteś-moją-konkurencją-na-rynku-pracy-ass attitude i podziel się z grupą
+A i jeszcze jedno. Jak ta stronka trafiła w twoje ręce, to weź sobie daruj jesteś-moją-konkurencją-na-rynku-pracy-ass attitude i podziel się z zaufanymi ziomeczkami **(dziekan nie jest zaufanym ziomeczkiem, rektor też nie)**
