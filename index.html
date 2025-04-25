@@ -4,14 +4,16 @@
         <meta charset="utf-8">
         <title>IS-it-notateczki</title>
         <link rel="stylesheet" href="./styles/structure.min.css">
-        <link rel="stylesheet" href="./styles/design.min.css">
-        <link rel="stylesheet" href="./styles/markdown.min.css">
+  <link rel="stylesheet" href="./styles/design.min.css">
+  <link rel="stylesheet" href="./styles/markdown.min.css">
 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
-        <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-        <script src="./scripts/emojiMap.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="./scripts/emojiMap.js"></script>
+
+  <!-- Ładowanie highlight.js z opóźnieniem konfiguracji -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onload="configureMarked()"></script>
     </head>
 
     <body>
@@ -56,23 +58,26 @@
 
 
         <script>
-
             // Funkcja zamiany shortcodes na emoji
             function renderEmojis(text) {
             return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
             }
 
-            // Konfiguracja Marked z GFM i highlight.js
+            // Konfiguracja Marked z highlight.js (wywołana po załadowaniu highlight.js)
+            function configureMarked() {
             marked.setOptions({
                 gfm: true,
                 breaks: true,
                 highlight: function (code, lang) {
-                    const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-                    return hljs.highlight(code, { language }).value;
+                const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+                return hljs.highlight(code, { language }).value;
                 },
             });
+            // Po skonfigurowaniu Marked, wczytaj domyślny plik
+            loadMarkdown('docs/main.md');
+            }
 
-             // Funkcja do wczytywania Markdown
+            // Funkcja do wczytywania Markdown
             function loadMarkdown(file) {
             fetch(file)
                 .then(response => {
@@ -88,11 +93,6 @@
                 });
             }
 
-            // Wczytaj domyślny plik po załadowaniu strony
-            window.onload = () => {
-            loadMarkdown('docs/main.md');
-            };
-
             // Pobierz wszystkie linki z atrybutem data-md-file
             const links = document.querySelectorAll('.menu a[data-md-file]');
             links.forEach(link => {
@@ -102,7 +102,7 @@
                 loadMarkdown(mdFile);
             });
             });
-          </script>
+        </script>
 
     </body>
 </html>
