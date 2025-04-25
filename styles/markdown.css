@@ -109,6 +109,22 @@
   color: #b9e;
 }
 
+#md-screen table {
+  border-collapse: collapse;
+}
+
+#md-screen th {
+  border-bottom: solid 2px #ccc;
+  border-left: solid 1px #bbb;
+  border-right: solid 1px #bbb;
+}
+
+#md-screen td {
+  border-left: solid 1px #bbb;
+  border-right: solid 1px #bbb;
+  border-bottom: solid 1px #666;
+}
+
 #md-screen .hljs {
   background: transparent;
   color: #ddd;

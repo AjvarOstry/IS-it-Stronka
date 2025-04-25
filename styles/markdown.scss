@@ -102,6 +102,7 @@
             color: #bbb;
         }
 
+        //Linki
         a {
             text-decoration: none;
             color: #99e;
@@ -112,6 +113,23 @@
         a:visited {
             color: #b9e;
         }
+
+        //Tabelka
+        table {
+            border-collapse: collapse;
+        }
+        th {
+            border-bottom: solid 2px #ccc;
+            border-left: solid 1px #bbb;
+            border-right: solid 1px #bbb;
+        }
+        td {
+            border-left: solid 1px #bbb;
+            border-right: solid 1px #bbb;
+            border-bottom: solid 1px #666;
+        }
+
+
 
         // Dostosowanie kolorów highlight.js do Twojego motywu
         .hljs {
