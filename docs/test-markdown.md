@@ -89,8 +89,8 @@ Sprawdź obsługę emotikonek z `emojiMap.js`:
 
 ## Tickboxy
 
-- [ ] - pusty
-- [X] - zaznaczony
+- [ ] pusty
+- [X] zaznaczony
 
 ## Podsumowanie
 
