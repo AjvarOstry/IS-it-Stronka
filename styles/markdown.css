@@ -109,10 +109,6 @@
   color: #b9e;
 }
 
-#md-screen table {
-  border-collapse: collapse;
-}
-
 #md-screen th {
   border-bottom: solid 1px #ffffff90;
   border-left: solid 1px #ffffff30;
@@ -120,9 +116,15 @@
 }
 
 #md-screen td {
+  background-color: #ffffff05;
   border-left: solid 1px #ffffff30;
   border-right: solid 1px #ffffff30;
   border-top: solid 1px #ffffff10;
+}
+
+#md-screen table {
+  border-collapse: collapse;
+  border: none;
 }
 
 #md-screen .hljs {

@@ -115,18 +115,22 @@
         }
 
         //Tabelka
-        table {
-            border-collapse: collapse;
-        }
+        
         th {
             border-bottom: solid 1px #ffffff90;
             border-left: solid 1px #ffffff30;
             border-right: solid 1px #ffffff30;
         }   
         td {
+            background-color: #ffffff05;
+            
             border-left: solid 1px #ffffff30;
             border-right: solid 1px #ffffff30;
             border-top: solid 1px #ffffff10;
+        }
+        table {
+            border-collapse: collapse;
+            border: none;
         }
 
 
