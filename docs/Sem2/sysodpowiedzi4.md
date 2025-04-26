@@ -43,18 +43,35 @@ przetwarzającą, bo **ponad połowę** swojego czasu życia spędza w stanie za
 #### 7. Z jakich obszarów składa się pamięć wirtualna procesu i czy one ze sobą bezpośrednio sąsiadują zgodnie z adresacją logiczną?
 (testowe)
 
-Pamięć wirtualna procesu składa się z segmentów pamięci, które z kolei podzielone są na strony pamięci. Nie muszą sąsiadować ze sobą, bezpośrednio, jednak muszą występować w określonej kolejności. Każdy z obszarów pamięci ma przypisane uprawnienia zależne od segmentu procesu, do jakiego należy *(co było już wykazywane w odpowiedzi z zadania 2)*
+Pamięć wirtualna procesu składa się z segmentów pamięci, które z kolei podzielone są na strony pamięci. Nie muszą sąsiadować ze sobą, bezpośrednio, jednak muszą występować w określonej kolejności. Każdy z obszarów pamięci ma przypisane uprawnienia zależne od segmentu procesu, do jakiego należy *(co było już wykazywane w odpowiedzi z zadania 2 - polecenie `pmap`)*
 
 ***
 
-Czym jest sterta procesu i co zawiera?
+#### 8. Czym jest sterta procesu i co zawiera?
+(testowe)
 
-Który z segmentów procesu zawiera stertę, a który stos i czy są one segmentami anonimowymi? - wymagane wskazanie segmentu sterty i stosu w mapie pamięci wybranego procesu.
+Sterta pamięci to dynamicznie przydzielany dla procesu obszar przeznaczony na dane wytworzone przez proces. Zwykle zawiera dane dynamicznie alokowane (`new` w c++), tablice itp.
 
-Czy całość jego kodu i danych jest wczytywana z pliku programu ELF oraz plików bibliotek ELF do fizycznej pamięci ulotnej?  - wymagane zaprezentowania odpowiednich wartości dla przykładowego nieanonimowego segmentu danych i segmentów tekstu w listingu z mapą pamięci procesu jednowątkowego, gdzie nie wszystkie strony segmentu są załadowane do ramek.
+***
 
-Czy proces będzie posiadał więcej ramek czy stron pamięci i co mogą one zawierać?
- 
+#### 9. Który z segmentów procesu zawiera stertę, a który stos i czy są one segmentami anonimowymi? - wymagane wskazanie segmentu sterty i stosu w mapie pamięci wybranego procesu.
+
+#### 10. Czy całość jego kodu i danych jest wczytywana z pliku programu ELF oraz plików bibliotek ELF do fizycznej pamięci ulotnej?  - wymagane zaprezentowania odpowiednich wartości dla przykładowego nieanonimowego segmentu danych i segmentów tekstu w listingu z mapą pamięci procesu jednowątkowego, gdzie nie wszystkie strony segmentu są załadowane do ramek.
+
+#### 11. Czy proces będzie posiadał więcej ramek czy stron pamięci i co mogą one zawierać?
+(testowe)
+
+Pamięć wirtualna, [o której była mowa w zadaniu 7](#7-z-jakich-obszarów-składa-się-pamięć-wirtualna-procesu-i-czy-one-ze-sobą-bezpośrednio-sąsiadują-zgodnie-z-adresacją-logiczną) , dzieli się na strony.natomiast pamięć fizyczna (RAM) dzieli się na ramki, do których ładowane są strony. W każdej ramce mieści się jedna strona. Należy pamiętać, że pamięć wirtualna procesu może być większa niż pamięć fizyczna. 
+
+**Eksperyment**
+```bash
+cat /proc/[PID]/status |grep -e VmSize #tu będzie rozmiar pamięci wirtualnej
+getconf PAGE_SIZE #rozmiar strony - dzielimy VmSize przez to i mamy ilość stron
+ cat /proc/meminfo | grep -e MemTotal # a tu mamy cały RAM, który możemy tak samo przeliczyć na ramki
+```
+
+***
+
 Jaki rozmiar zajmują wszystkie strony procesu a jaki wszystkie przydzielone dla procesu ramki oraz jak nazywa się sytuacja, gdy potrzebna strona nie znajduje się w ramce procesu (należy wymienić możliwe warianty tej sytuacji oraz gdzie system będzie szukał potrzebnej strony)?  - wymagane wskazanie odpowiednich wartości w listingach.
 
 Kto zgłasza błędy braku strony, jakie są rodzaje błędów stron oraz jakie odpowiadają im chybienia i przestoje związane z ich obsługą, które z błędów stron występują częściej dla procesu?
