@@ -1,78 +1,79 @@
-* {
-    margin: auto;
-    padding: auto;
-}
+  * {
+      margin: auto;
+      padding: auto;
+  }
 
-header {
-    padding-right: 60px;
+  header {
+      padding-right: 60px;
 
-    h1 {
-        padding-top: 15px;
-    }
-}
+      h1 {
+          padding-top: 15px;
+      }
+  }
 
-section {
-//=== flexbox  
-    display: flex;
-    flex-direction: row;
-    align-content: flex-start;
-//===
-    height: calc(100vh - 120px); //140 ok
-}
+  section {
+  //=== flexbox  
+      display: flex;
+      flex-direction: row;
+      //align-content: flex-start;
+      align-items: flex-start;
+  //===
+      height: calc(100vh - 100px); //120 ok
+  }
 
-.box {
-  //height: calc(100vh - 110px);
-  height: 100%;
-  margin: 10px;
-  padding: 15px;
-}
-
-nav {
-    width: 230px;
-
+  .box {
+    //height: calc(100vh - 110px);
+    height: 100%;
     margin: 10px;
     padding: 15px;
-}
-
-article {
-
-    width: 100%;
-    overflow-y: scroll;
-    padding-left: 30px;
-}
-
-
-
-//=== Lista MENU
-.menu {
-    list-style: none;
-    padding: 0;
   }
-  
-  .menu > li > a {
-    display: block;
-    text-decoration: none;
-  }
-  
-  .podmenu {
-    list-style: none;
-    padding: 0;
-    display: none; 
 
-    opacity: 0;
-    transform: translateY(-5px);
-    transition: opacity 0.5s ease, transform 0.5s ease;
+  nav {
+      width: 230px;
+
+      //margin: 10px;
+      //padding: 15px;
   }
-  
-  .podmenu li a {
-    display: block;
-    //padding: 10px;
-    text-decoration: none;
+
+  article {
+
+      width: 100%;
+      overflow-y: scroll;
+      //padding-left: 30px;
   }
-  
-  //pokazuje po najechaniu
-  .ma-podmenu:hover .podmenu {
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
-  }
+
+
+
+  //=== Lista MENU
+  .menu {
+      list-style: none;
+      padding: 0;
+    }
+    
+    .menu > li > a {
+      display: block;
+      text-decoration: none;
+    }
+    
+    .podmenu {
+      list-style: none;
+      padding: 0;
+      display: none; 
+
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    
+    .podmenu li a {
+      display: block;
+      //padding: 10px;
+      text-decoration: none;
+    }
+    
+    //pokazuje po najechaniu
+    .ma-podmenu:hover .podmenu {
+      display: block;
+      opacity: 1;
+      transform: translateY(0);
+    }

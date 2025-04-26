@@ -14,8 +14,8 @@ header h1 {
 section {
   display: flex;
   flex-direction: row;
-  align-content: flex-start;
-  height: calc(100vh - 120px);
+  align-items: flex-start;
+  height: calc(100vh - 100px);
 }
 
 .box {
@@ -26,14 +26,11 @@ section {
 
 nav {
   width: 230px;
-  margin: 10px;
-  padding: 15px;
 }
 
 article {
   width: 100%;
   overflow-y: scroll;
-  padding-left: 30px;
 }
 
 .menu {

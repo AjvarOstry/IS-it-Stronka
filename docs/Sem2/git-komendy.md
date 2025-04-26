@@ -12,6 +12,8 @@ git checkout <nazwa-brancha> #zmieniamy brancha
 
 git pull origin <nazwa-brancha> #robimy pulla (zaciągamy brancha ze zdalnego repo)
 
+# Tu sobie pracujemy na plikach lokalnie...
+
 git status #sprawdzamy co mamy w stageu
 git add * #dodajemy wszystkie zmiany do commita
 git commit -m "Wiadomosć" #robimmy commita
