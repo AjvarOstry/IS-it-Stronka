@@ -72,28 +72,49 @@ getconf PAGE_SIZE #rozmiar strony - dzielimy VmSize przez to i mamy ilość stro
 
 ***
 
-Jaki rozmiar zajmują wszystkie strony procesu a jaki wszystkie przydzielone dla procesu ramki oraz jak nazywa się sytuacja, gdy potrzebna strona nie znajduje się w ramce procesu (należy wymienić możliwe warianty tej sytuacji oraz gdzie system będzie szukał potrzebnej strony)?  - wymagane wskazanie odpowiednich wartości w listingach.
+#### 12. Jaki rozmiar zajmują wszystkie strony procesu a jaki wszystkie przydzielone dla procesu ramki oraz jak nazywa się sytuacja, gdy potrzebna strona nie znajduje się w ramce procesu (należy wymienić możliwe warianty tej sytuacji oraz gdzie system będzie szukał potrzebnej strony)?  - wymagane wskazanie odpowiednich wartości w listingach.
 
-Kto zgłasza błędy braku strony, jakie są rodzaje błędów stron oraz jakie odpowiadają im chybienia i przestoje związane z ich obsługą, które z błędów stron występują częściej dla procesu?
+***
 
-Na czym polega zjawisko pobocznego błędu strony i jakie działania podejmuje system operacyjny w tej sytuacji?  
+#### 13. Kto zgłasza błędy braku strony, jakie są rodzaje błędów stron oraz jakie odpowiadają im chybienia i przestoje związane z ich obsługą, które z błędów stron występują częściej dla procesu?
 
-Jakie odwzorowania przechowuje tablica stron procesu, jak jest zbudowana i kto odczytuje jej zawartość? Czym jest pamięć asocjacyjna TLB? 
+W występują dwa podstawowe rodzaje błędu strony - główny i poboczny. Oba zgłaszane przez MMU
+- Poboczny - jest wynikiem chybienia miękkiego
+- Główny - jest wynikiem chybienia twardego - występuje rzadziej, powoduje większe opóźnienia
 
-Czym jest obszar pamięci swap cache, jaki jest jego rozmiar w systemie operacyjnym i w jakiej sytuacji do tego obszaru zostaje przydzielona ramka ze stroną? 
+***
 
-W jakiej sytuacji występuje zjawisko głównego błędu strony i jakie działania podejmuje system operacyjny w celu obsługi tej sytuacji?  
+#### 14. Na czym polega zjawisko pobocznego błędu strony i jakie działania podejmuje system operacyjny w tej sytuacji?  
 
-Gdzie system operacyjny szuka potrzebnej strony w przypadku wystąpienia głównego błędu braku strony? 
+Błąd poboczny polega na tym, że strona znajduje się już w pamięci RAM, ale tablica stron nie wskazuje jeszcze na ramkę.
+Ramka zawierająca potrzebną stronę zostaje zlokalizowana w pamięci swap cache i przydzielona do zbioru roboczego procesu. Tablica stron jest akutalizowana zgodnie ze zmianami, jakie wystąpiły w zbiorze roboczym
 
-Z jakich elementów zbudowana jest przestrzeń wymiany, jakie rozróżniamy rodzaje tych elementów? 
+***
 
-Jeżeli plik zawierający program/bibliotekę ELF zostanie usunięty, to skąd system operacyjny będzie doczytywał potrzebne strony, jaki jest związek pomiędzy niezwolnionymi blokami systemu plików a stronami? - omówienie statystyk węzłów i bloków systemu plików, aby stwierdzić czy po usunięciu pliku zostały one zwolnione wraz z usuniętym wpisem katalogowym. 
+#### 15. Jakie odwzorowania przechowuje tablica stron procesu, jak jest zbudowana i kto odczytuje jej zawartość? Czym jest pamięć asocjacyjna TLB? 
 
-Z jakiego obszaru pamięci ulotnej wybierane są niepuste ramki i jakie kryteria musi spełniać ramka wybrana przez algorytm wymiany? - analiza wyników free –w dotycząca różnicy w wartościach pomiędzy kolumną free i available w wierszu mem. 
+Tablica stron procesu - nieciągła struktura danych, która zawiera odwzorowania adresów stron i ramek naeżących do procesu. Jej zawartość jest odczytywana przez układ zarządzania pamięcią MMU, która nie musi każdorazowo przy wykonaniu transformacji adresu logicznego na adres fizyczny przeszukiwać tablicy stron dzięki wykorzystaniu wbudowanej w MMU pamięci asocjacyjnej TLB. Jest wielopoziomowa i utrzymywana przez jądro systemu operacyjnego dla każdego procesu
 
-Czym jest presja pamięci oraz migotanie, jakie działania podejmuje system operacyjny w przypadku napotkania presji pamięci?
+***
 
-Na czym polega procedura OOM i jakie ma negatywne skutki? 
+#### 16. Czym jest obszar pamięci swap cache, jaki jest jego rozmiar w systemie operacyjnym i w jakiej sytuacji do tego obszaru zostaje przydzielona ramka ze stroną? 
 
-Jakie zasoby systemowe trzeba monitorować i jakie działania można podjąć aby procedura OOM nie była zastosowana? - wymagane zaprezentowanie odpowiednich wartości w listingach.
+
+
+***
+
+#### 17. W jakiej sytuacji występuje zjawisko głównego błędu strony i jakie działania podejmuje system operacyjny w celu obsługi tej sytuacji?  
+
+#### 18. Gdzie system operacyjny szuka potrzebnej strony w przypadku wystąpienia głównego błędu braku strony? 
+
+#### 19. Z jakich elementów zbudowana jest przestrzeń wymiany, jakie rozróżniamy rodzaje tych elementów? 
+
+#### 20. Jeżeli plik zawierający program/bibliotekę ELF zostanie usunięty, to skąd system operacyjny będzie doczytywał potrzebne strony, jaki jest związek pomiędzy niezwolnionymi blokami systemu plików a stronami? - omówienie statystyk węzłów i bloków systemu plików, aby stwierdzić czy po usunięciu pliku zostały one zwolnione wraz z usuniętym wpisem katalogowym. 
+
+#### 21. Z jakiego obszaru pamięci ulotnej wybierane są niepuste ramki i jakie kryteria musi spełniać ramka wybrana przez algorytm wymiany? - analiza wyników free –w dotycząca różnicy w wartościach pomiędzy kolumną free i available w wierszu mem. 
+
+#### 22. Czym jest presja pamięci oraz migotanie, jakie działania podejmuje system operacyjny w przypadku napotkania presji pamięci?
+
+#### 23. Na czym polega procedura OOM i jakie ma negatywne skutki? 
+
+#### 24. Jakie zasoby systemowe trzeba monitorować i jakie działania można podjąć aby procedura OOM nie była zastosowana? - wymagane zaprezentowanie odpowiednich wartości w listingach.
