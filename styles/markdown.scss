@@ -48,7 +48,7 @@
     
         // Kod inline
         code {
-            background-color: #ffffff05; // Lekko przezroczyste tło
+            background-color: #ffffff0a; // Lekko przezroczyste tło
             border-radius: 4px;
             padding: 2px 4px;
             color: #f0f0f0; // Jasny tekst dla kodu
@@ -67,7 +67,7 @@
             padding: 0;
         }
 
-                // Style dla checkboxów
+                // Style dla checkboxów - NIE DZIAŁA
         input[type="checkbox"] {
             display: none; // Ukrywamy domyślny checkbox
 

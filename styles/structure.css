@@ -26,12 +26,13 @@ section {
 nav {
   width: 230px;
   height: calc(100% - 30px);
+  overflow-y: auto;
 }
 
 article {
   width: 100%;
   height: calc(100% - 45px);
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .menu {
