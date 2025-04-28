@@ -62,9 +62,3 @@ git push origin --tags #albo pushujemy wszystkie tagi na raz
 
 .gitkeep #pusty plik, który powoduje, że git widzi pusty katalog
 ```
-### Cmake :gear: - tak dodatkowo
-```bash
-cmake -G "Unix Makefiles" .. #czyta cmakelists i tworzy zestaw plików potrzebny do kompilacji (wpisujemy, kiedy zmieniliśmy coś w cmakelistach, dodaliśmy plik lub bibliotekę w kodzie)
-
-make #w build żeby zbudować projekt
-make -j #to samo, tylko leci wszystkimi wątkami porcesora
