@@ -92,6 +92,11 @@ Sprawdź obsługę emotikonek z `emojiMap.js`:
 - [ ] pusty
 - [X] zaznaczony
 
-## Podsumowanie
+## Matematyka :skull:
 
-Ten plik testuje większość funkcjonalności Markdown. Sprawdź, jak renderują się style z `markdown.scss` i emotikony z `emojiMap.js`. Jeśli coś nie działa, otwórz konsolę (F12) i sprawdź błędy! :arrow_forward:
+Do wzorów w markdown używa się LaTeXa
+Wzór inline: $E = mc^2$.
+A ten będzie wyśrodkowany w formie bloku
+$$
+\int_{a}^{b} x^2 \, dx
+$$

@@ -11,6 +11,8 @@ Podstawowe są trzy:
 
 *W systemie operacyjnym GNU/Linux listę procesów udostępnia narzędzie ps, gdzie stan procesu jest reprezentowany odpowiednią wielką literą w kolumnie stat: gotowy do wykonania i wykonywany mają identyczne oznaczenie (R), zablokowany w zależności od rodzaju uśpienia z reakcją na sygnały (S) lub bez reakcji (D), wstrzymany (T), proces uszkodzony (Z). Dodatkowo wątki jądra mogą wykazywać stan bezczynności (I).*
 
+`ps -o pid,stat`
+
 ***
 
 #### 2. Jakie warunki muszą być spełnione aby wątek procesu mógł uzyskać przydział jednostki przetwarzającej?
@@ -24,11 +26,15 @@ Przydzielana jednostka musi być aktywna, a wątek musi być w stanie gotowym do
 (testowe)
 
 Proces ograniczony wejściem-wyjściem będzie często zwalniał przydzieloną mu jednostkę
-przetwarzającą, bo **ponad połowę** swojego czasu życia spędza w stanie zablokowanym. Wątek ograniczony procesorem będzie za to spędzał więksża część czasu w dowolnym z dwóch pozostałych stanów - gotowym do wykonania lub wykonywanym.
+przetwarzającą, bo **ponad połowę** swojego czasu życia spędza w stanie zablokowanym. Wątek ograniczony procesorem będzie za to spędzał większą część czasu w dowolnym z dwóch pozostałych stanów - gotowym do wykonania lub wykonywanym.
 
 ***
 
 #### 4. Do czego służy klasyfikacja procesów na ograniczone procesorem i ograniczone wejściem wyjściem oraz na jakiej podstawie zweryfikowano, że proces jest ograniczony wejściem-wyjściem? - weryfikacja przygotowanych w listingach obliczeń i wskazanie w nich wirtualnego czasu życia procesu realizującego odczyty z dysku /dev/sda.
+
+Klasyfikujac procesy możemy usprawnić przetwarzanie zadań przez proces poprzez dostosowanie przydziału jednostek przetwarzających lub zmianę polityki szeregowania.
+
+Proces ograniczony procesorem zwykle czeka na jednostkę przetwarzającą, proces ograniczony w-w na odczyt i zapis - na przykład oprecaje dyskowe.
 
 ***
 
@@ -118,3 +124,47 @@ Tablica stron procesu - nieciągła struktura danych, która zawiera odwzorowani
 #### 23. Na czym polega procedura OOM i jakie ma negatywne skutki? 
 
 #### 24. Jakie zasoby systemowe trzeba monitorować i jakie działania można podjąć aby procedura OOM nie była zastosowana? - wymagane zaprezentowanie odpowiednich wartości w listingach.
+
+## Przydatne polecenia:
+```bash
+ps -o
+    pid	#Process ID
+    ppid	#Parent Process ID
+    lwp	    #Light Weight Process (czyli ID wątku)
+    nlwp	#Number of threads in process
+    uid	    #ID właściciela
+    user	#Nazwa użytkownika
+    gid	    #Group ID
+    group	#Nazwa grupy
+    comm	#Nazwa programu
+    cmd	    #Komenda z argumentami
+    args	#Alias cmd
+    stat	#Stan procesu (S, R, Z, itd.)
+    stime	#Czas startu procesu
+    time	#Całkowity czas procesora
+    c	    #CPU usage
+    pri	    #Priorytet
+    ni	    #Nice value
+    psr	    #Numer CPU, na którym aktualnie działa
+    tty	    #Terminal
+    rss	    #Resident Set Size (RAM, KB)
+    vsz	    #Virtual memory size (KB)
+    pcpu	#Procent użycia CPU
+    pmem	#Procent użycia pamięci
+    start	#Data i czas rozpoczęcia
+    etimes	#Czas działania w sekundach
+    etime	#Formatowany czas działania
+    flags	#Flagi procesu
+    sid	    #Session ID
+    pgid	#Process Group ID
+    session	#Alias sid
+    wchan	#Nazwa kernela, w którym proces "czeka"
+    fname	#Nazwa pliku wykonywalnego
+    sgi_p	#Alias sgid
+    rssize	#Rozmiar pamięci RAM
+    nice	#Alias ni
+    class	#Klasa harmonogramu
+    policy	#Polityka planowania
+    maj_flt	#Liczba dużych page faultów
+    min_flt	#Liczba małych page faultów
+```
