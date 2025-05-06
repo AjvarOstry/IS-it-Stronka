@@ -16,8 +16,8 @@
   <!-- Highlight.js z motywem Monokai -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
-  <!-- Marked w konkretnej wersji z obsługą ładowania -->
-  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.min.js" onload="onMarkedLoaded()" onerror="console.error('Failed to load Marked')"></script>
+  <!-- Lokalny Marked -->
+  <script src="./scripts/marked.min.js" onload="onMarkedLoaded()" onerror="console.error('Failed to load local Marked')"></script>
   <script src="./scripts/emojiMap.js"></script>
 </head>
 
@@ -87,7 +87,7 @@
       } else {
         console.warn('highlight.js lub marked nie załadowały się poprawnie. Niektóre funkcje mogą nie działać.');
         if (!window.markedLoaded) {
-          console.error('Marked nie załadował się. Sprawdź połączenie internetowe lub URL.');
+          console.error('Marked nie załadował się. Sprawdź plik lokalny.');
           document.getElementById('md-screen').innerHTML = '<p>Błąd: Nie można załadować biblioteki Marked.</p>';
           return;
         }
@@ -206,7 +206,7 @@
             window.markedLoaded = true;
             configureMarked();
           } else {
-            console.error('Marked nadal nie załadowany. Sprawdź URL lub połączenie.');
+            console.error('Marked nadal nie załadowany. Sprawdź plik lokalny.');
             document.getElementById('md-screen').innerHTML = '<p>Błąd: Nie można załadować biblioteki Marked.</p>';
           }
         }, 1000); // Czekamy 1 sekundę na załadowanie
