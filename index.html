@@ -16,8 +16,8 @@
   <!-- Highlight.js z motywem Monokai -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
-  <!-- Marked w konkretnej wersji -->
-  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.min.js"></script>
+  <!-- Marked w konkretnej wersji z obsługą ładowania -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.min.js" onload="onMarkedLoaded()" onerror="console.error('Failed to load Marked')"></script>
   <script src="./scripts/emojiMap.js"></script>
 </head>
 
@@ -56,6 +56,12 @@
   <!-- JavaScript na końcu body, aby DOM był załadowany -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
+    // Funkcja wywoływana po załadowaniu Marked
+    function onMarkedLoaded() {
+      window.markedLoaded = true;
+      configureMarked();
+    }
+
     // Funkcja zamiany shortcodes na emoji
     function renderEmojis(text) {
       return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
@@ -68,7 +74,7 @@
     };
 
     function configureMarked() {
-      if (typeof hljs !== 'undefined' && typeof marked !== 'undefined') {
+      if (typeof hljs !== 'undefined' && typeof marked !== 'undefined' && window.markedLoaded) {
         marked.setOptions({
           gfm: true,
           breaks: true,
@@ -80,6 +86,11 @@
         });
       } else {
         console.warn('highlight.js lub marked nie załadowały się poprawnie. Niektóre funkcje mogą nie działać.');
+        if (!window.markedLoaded) {
+          console.error('Marked nie załadował się. Sprawdź połączenie internetowe lub URL.');
+          document.getElementById('md-screen').innerHTML = '<p>Błąd: Nie można załadować biblioteki Marked.</p>';
+          return;
+        }
         marked.setOptions({
           gfm: true,
           breaks: true,
@@ -187,7 +198,21 @@
 
     // Inicjalizacja po załadowaniu DOM
     document.addEventListener('DOMContentLoaded', () => {
-      configureMarked();
+      // Upewniamy się, że Marked się załadowało, zanim wykonamy configureMarked
+      if (!window.markedLoaded) {
+        console.warn('Marked nie załadował się od razu. Czekamy...');
+        setTimeout(() => {
+          if (typeof marked !== 'undefined') {
+            window.markedLoaded = true;
+            configureMarked();
+          } else {
+            console.error('Marked nadal nie załadowany. Sprawdź URL lub połączenie.');
+            document.getElementById('md-screen').innerHTML = '<p>Błąd: Nie można załadować biblioteki Marked.</p>';
+          }
+        }, 1000); // Czekamy 1 sekundę na załadowanie
+      } else {
+        configureMarked();
+      }
       const links = document.querySelectorAll('.menu a[data-md-file]');
       links.forEach(link => {
         link.addEventListener('click', (e) => {
