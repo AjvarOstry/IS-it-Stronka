@@ -19,137 +19,6 @@
   <!-- Marked w konkretnej wersji -->
   <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.min.js"></script>
   <script src="./scripts/emojiMap.js"></script>
-
-  <!-- Definicja funkcji w head -->
-  <script>
-    // Funkcja zamiany shortcodes na emoji
-    function renderEmojis(text) {
-      return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
-    }
-
-    // Konfiguracja Marked z rendererem dla checkboxów
-    const renderer = new marked.Renderer();
-    renderer.checkbox = function (checked) {
-      return `<input type="checkbox" ${checked ? 'checked' : ''}>`;
-    };
-
-    function configureMarked() {
-      if (typeof hljs !== 'undefined') {
-        marked.setOptions({
-          gfm: true,
-          breaks: true,
-          renderer: renderer,
-          highlight: function (code, lang) {
-            const language = hljs.getLanguage(lang) ? lang : 'plaintext';
-            return hljs.highlight(code, { language }).value;
-          },
-        });
-      } else {
-        console.warn('highlight.js nie załadował się poprawnie. Kolorowanie składni nie będzie działać.');
-        marked.setOptions({
-          gfm: true,
-          breaks: true,
-          renderer: renderer,
-        });
-      }
-      loadMarkdown('docs/main.md');
-    }
-
-    // Funkcja do wczytywania Markdown i renderowania wzorów
-    let currentFile = '';
-    let currentMarkdown = '';
-
-    function loadMarkdown(file) {
-      currentFile = file;
-      fetch(file)
-        .then(response => {
-          if (!response.ok) throw new Error('Nie można wczytać pliku');
-          return response.text();
-        })
-        .then(text => {
-          currentMarkdown = text;
-          const renderedText = renderEmojis(marked.parse(text));
-          document.getElementById('md-screen').innerHTML = renderedText;
-          if (typeof hljs !== 'undefined') {
-            document.querySelectorAll('#md-screen pre code').forEach(block => {
-              hljs.highlightElement(block);
-            });
-          }
-          // Renderowanie wzorów matematycznych za pomocą KaTeX
-          renderMathInElement(document.getElementById('md-screen'), {
-            delimiters: [
-              { left: "$$", right: "$$", display: true }, // Wzory blokowe
-              { left: "$", right: "$", display: false },  // Wzory inline
-              { left: "\\[", right: "\\]", display: true }, // Alternatywne dla blokowych
-              { left: "\\(", right: "\\)", display: false } // Alternatywne dla inline
-            ],
-            throwOnError: false
-          });
-          addCheckboxInteractivity();
-        })
-        .catch(error => {
-          document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
-        });
-    }
-
-    // Funkcja dodająca interaktywność checkboxom
-    function addCheckboxInteractivity() {
-      const checkboxes = document.querySelectorAll('#md-screen input[type="checkbox"]');
-      checkboxes.forEach((checkbox, index) => {
-        checkbox.setAttribute('data-index', index);
-        checkbox.addEventListener('change', (e) => {
-          const idx = parseInt(e.target.getAttribute('data-index'));
-          updateMarkdownCheckbox(idx, e.target.checked);
-        });
-        const li = checkbox.parentElement;
-        li.addEventListener('click', (e) => {
-          if (e.target !== checkbox) {
-            checkbox.checked = !checkbox.checked;
-            updateMarkdownCheckbox(idx, checkbox.checked);
-          }
-        });
-      });
-    }
-
-    // Funkcja aktualizująca Markdown po zmianie stanu checkboxa
-    function updateMarkdownCheckbox(index, checked) {
-      const lines = currentMarkdown.split('\n');
-      let checkboxCount = -1;
-
-      for (let i = 0; i < lines.length; i++) {
-        if (lines[i].match(/-\s*\[.\]/)) {
-          checkboxCount++;
-          if (checkboxCount === index) {
-            lines[i] = lines[i].replace(/\[.\]/, checked ? '[x]' : '[ ]');
-            break;
-          }
-        }
-      }
-
-      currentMarkdown = lines.join('\n');
-      const renderedText = renderEmojis(marked.parse(currentMarkdown));
-      document.getElementById('md-screen').innerHTML = renderedText;
-      if (typeof hljs !== 'undefined') {
-        document.querySelectorAll('#md-screen pre code').forEach(block => {
-          hljs.highlightElement(block);
-        });
-      }
-      // Ponowne renderowanie wzorów po aktualizacji Markdowna
-      renderMathInElement(document.getElementById('md-screen'), {
-        delimiters: [
-          { left: "$$", right: "$$", display: true },
-          { left: "$", right: "$", display: false },
-          { left: "\\[", right: "\\]", display: true },
-          { left: "\\(", right: "\\)", display: false }
-        ],
-        throwOnError: false
-      });
-      addCheckboxInteractivity();
-    }
-  </script>
-
-  <!-- Ładowanie highlight.js z opóźnieniem konfiguracji -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onload="configureMarked()"></script>
 </head>
 
 <body>
@@ -184,14 +53,148 @@
     <article id="md-screen" class="box"></article>
   </section>
 
+  <!-- JavaScript na końcu body, aby DOM był załadowany -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
   <script>
-    // Pobierz wszystkie linki z atrybutem data-md-file
-    const links = document.querySelectorAll('.menu a[data-md-file]');
-    links.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const mdFile = link.getAttribute('data-md-file');
-        loadMarkdown(mdFile);
+    // Funkcja zamiany shortcodes na emoji
+    function renderEmojis(text) {
+      return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
+    }
+
+    // Konfiguracja Marked z rendererem dla checkboxów
+    const renderer = new marked.Renderer();
+    renderer.checkbox = function (checked) {
+      return `<input type="checkbox" ${checked ? 'checked' : ''}>`;
+    };
+
+    function configureMarked() {
+      if (typeof hljs !== 'undefined' && typeof marked !== 'undefined') {
+        marked.setOptions({
+          gfm: true,
+          breaks: true,
+          renderer: renderer,
+          highlight: function (code, lang) {
+            const language = hljs.getLanguage(lang) ? lang : 'plaintext';
+            return hljs.highlight(code, { language }).value;
+          },
+        });
+      } else {
+        console.warn('highlight.js lub marked nie załadowały się poprawnie. Niektóre funkcje mogą nie działać.');
+        marked.setOptions({
+          gfm: true,
+          breaks: true,
+          renderer: renderer,
+        });
+      }
+      loadMarkdown('docs/main.md');
+    }
+
+    // Funkcja do wczytywania Markdown i renderowania wzorów
+    let currentFile = '';
+    let currentMarkdown = '';
+
+    function loadMarkdown(file) {
+      currentFile = file; // Ustawiamy currentFile przed użyciem
+      fetch(file)
+        .then(response => {
+          if (!response.ok) throw new Error('Nie można wczytać pliku');
+          return response.text();
+        })
+        .then(text => {
+          currentMarkdown = text;
+          const renderedText = renderEmojis(marked.parse(text));
+          document.getElementById('md-screen').innerHTML = renderedText;
+          if (typeof hljs !== 'undefined') {
+            document.querySelectorAll('#md-screen pre code').forEach(block => {
+              hljs.highlightElement(block);
+            });
+          }
+          // Renderowanie wzorów matematycznych za pomocą KaTeX
+          if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.getElementById('md-screen'), {
+              delimiters: [
+                { left: "$$", right: "$$", display: true },
+                { left: "$", right: "$", display: false },
+                { left: "\\[", right: "\\]", display: true },
+                { left: "\\(", right: "\\)", display: false }
+              ],
+              throwOnError: false
+            });
+          }
+          addCheckboxInteractivity();
+        })
+        .catch(error => {
+          document.getElementById('md-screen').innerHTML = `<p>Błąd: ${error.message}</p>`;
+        });
+    }
+
+    // Funkcja dodająca interaktywność checkboxom
+    function addCheckboxInteractivity() {
+      const checkboxes = document.querySelectorAll('#md-screen input[type="checkbox"]');
+      checkboxes.forEach((checkbox, index) => {
+        checkbox.setAttribute('data-index', index);
+        checkbox.addEventListener('change', (e) => {
+          const idx = parseInt(e.target.getAttribute('data-index'));
+          updateMarkdownCheckbox(idx, e.target.checked);
+        });
+        const li = checkbox.parentElement;
+        li.addEventListener('click', (e) => {
+          if (e.target !== checkbox) {
+            checkbox.checked = !checkbox.checked;
+            const idx = parseInt(checkbox.getAttribute('data-index'));
+            updateMarkdownCheckbox(idx, checkbox.checked);
+          }
+        });
+      });
+    }
+
+    // Funkcja aktualizująca Markdown po zmianie stanu checkboxa
+    function updateMarkdownCheckbox(index, checked) {
+      const lines = currentMarkdown.split('\n');
+      let checkboxCount = -1;
+
+      for (let i = 0; i < lines.length; i++) {
+        if (lines[i].match(/-\s*\[.\]/)) {
+          checkboxCount++;
+          if (checkboxCount === index) {
+            lines[i] = lines[i].replace(/\[.\]/, checked ? '[x]' : '[ ]');
+            break;
+          }
+        }
+      }
+
+      currentMarkdown = lines.join('\n');
+      const renderedText = renderEmojis(marked.parse(currentMarkdown));
+      document.getElementById('md-screen').innerHTML = renderedText;
+      if (typeof hljs !== 'undefined') {
+        document.querySelectorAll('#md-screen pre code').forEach(block => {
+          hljs.highlightElement(block);
+        });
+      }
+      if (typeof renderMathInElement !== 'undefined') {
+        renderMathInElement(document.getElementById('md-screen'), {
+          delimiters: [
+            { left: "$$", right: "$$", display: true },
+            { left: "$", right: "$", display: false },
+            { left: "\\[", right: "\\]", display: true },
+            { left: "\\(", right: "\\)", display: false }
+          ],
+          throwOnError: false
+        });
+      }
+      addCheckboxInteractivity();
+    }
+
+    // Inicjalizacja po załadowaniu DOM
+    document.addEventListener('DOMContentLoaded', () => {
+      configureMarked();
+      const links = document.querySelectorAll('.menu a[data-md-file]');
+      links.forEach(link => {
+        link.addEventListener('click', (e) => {
+          e.preventDefault();
+          const mdFile = link.getAttribute('data-md-file');
+          loadMarkdown(mdFile);
+        });
       });
     });
   </script>
