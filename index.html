@@ -1,27 +1,27 @@
-    <!DOCTYPE html>
-    <html lang="pl-PL">
-    <head>
-    <meta charset="utf-8">
-    <title>IS-it-notateczki</title>
-    <link rel="stylesheet" href="./styles/structure.min.css">
-    <link rel="stylesheet" href="./styles/design.min.css">
-    <link rel="stylesheet" href="./styles/markdown.min.css">
-    
-    <!-- KaTeX dla wzorów matematycznych -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+  <meta charset="utf-8">
+  <title>IS-it-notateczki</title>
+  <link rel="stylesheet" href="./styles/structure.min.css">
+  <link rel="stylesheet" href="./styles/design.min.css">
+  <link rel="stylesheet" href="./styles/markdown.min.css">
 
-    <!-- Automatyczne renderowanie KaTeX -->
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+  <!-- KaTeX dla wzorów matematycznych -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <!-- Automatyczne renderowanie KaTeX -->
+  <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
 
+  <!-- Highlight.js z motywem Monokai -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/monokai.min.css">
+  <!-- Marked w konkretnej wersji -->
+  <script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/lib/marked.min.js"></script>
+  <script src="./scripts/emojiMap.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="./scripts/emojiMap.js"></script>
-
-    <!-- Definicja funkcji w head -->
-    <script>
+  <!-- Definicja funkcji w head -->
+  <script>
     // Funkcja zamiany shortcodes na emoji
     function renderEmojis(text) {
       return text.replace(/:[a-zA-Z0-9_-]+:/g, match => window.emojiMap[match] || match);
@@ -148,52 +148,52 @@
     }
   </script>
 
-    <!-- Ładowanie highlight.js z opóźnieniem konfiguracji -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onload="configureMarked()"></script>
-    </head>
+  <!-- Ładowanie highlight.js z opóźnieniem konfiguracji -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" onload="configureMarked()"></script>
+</head>
 
-    <body>
-    <header>
-        <h1>IS it?</h1>
-    </header>
-    
-    <section>
-        <nav class="box">
-        <ul class="menu">
-            <li><a href="#" data-md-file="docs/main.md"> > Strona główna</a></li>
-            <hr>
-            <li>Semestr 1</li>
-            <li class="ma-podmenu">
-            <a href="#">Semestr 2</a>
-            <ul class="podmenu">
-                <li><a href="#" data-md-file="./docs/Sem2/git-komendy.md">Git</a></li>
-                <li><a href="#" data-md-file="./docs/Sem2/cmake-i-boosttest.md">Cmake+Boosttest</a></li>
-                <li><a href="#" data-md-file="docs/Sem2/sysodpowiedzi4.md">SysOdpowiedzi 4</a></li>
-            </ul>
-            </li>
-            <li>Semestr 3</li>
-            <hr>
-            <li class="ma-podmenu">
-            <a href="#">Różne takie</a>
-            <ul class="podmenu">
-                <li><a href="#" data-md-file="./docs/test-markdown.md">Testy</a></li>
-            </ul>
-            </li>
-        </ul>
-        </nav>
-        <article id="md-screen" class="box"></article>
-    </section>
+<body>
+  <header>
+    <h1>IS it?</h1>
+  </header>
+  
+  <section>
+    <nav class="box">
+      <ul class="menu">
+        <li><a href="#" data-md-file="docs/main.md"> > Strona główna</a></li>
+        <hr>
+        <li>Semestr 1</li>
+        <li class="ma-podmenu">
+          <a href="#">Semestr 2</a>
+          <ul class="podmenu">
+            <li><a href="#" data-md-file="./docs/Sem2/git-komendy.md">Git</a></li>
+            <li><a href="#" data-md-file="./docs/Sem2/cmake-i-boosttest.md">Cmake+Boosttest</a></li>
+            <li><a href="#" data-md-file="docs/Sem2/sysodpowiedzi4.md">SysOdpowiedzi 4</a></li>
+          </ul>
+        </li>
+        <li>Semestr 3</li>
+        <hr>
+        <li class="ma-podmenu">
+          <a href="#">Różne takie</a>
+          <ul class="podmenu">
+            <li><a href="#" data-md-file="./docs/test-markdown.md">Testy</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <article id="md-screen" class="box"></article>
+  </section>
 
-    <script>
-        // Pobierz wszystkie linki z atrybutem data-md-file
-        const links = document.querySelectorAll('.menu a[data-md-file]');
-        links.forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const mdFile = link.getAttribute('data-md-file');
-            loadMarkdown(mdFile);
-        });
-        });
-    </script>
-    </body>
-    </html>
+  <script>
+    // Pobierz wszystkie linki z atrybutem data-md-file
+    const links = document.querySelectorAll('.menu a[data-md-file]');
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const mdFile = link.getAttribute('data-md-file');
+        loadMarkdown(mdFile);
+      });
+    });
+  </script>
+</body>
+</html>
