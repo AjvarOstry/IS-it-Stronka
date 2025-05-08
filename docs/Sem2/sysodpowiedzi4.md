@@ -1,55 +1,48 @@
 # Sysodpowiedzi 4
 
 ### 4.1
-#### 1. Jakie są podstawowe stany wątku procesu? 
-(testowe)
-
-Podstawowe są trzy:
-- Zablokowany
-- Gotowy do wykonania
-- Wykonywany
-
-*W systemie operacyjnym GNU/Linux listę procesów udostępnia narzędzie ps, gdzie stan procesu jest reprezentowany odpowiednią wielką literą w kolumnie stat: gotowy do wykonania i wykonywany mają identyczne oznaczenie (R), zablokowany w zależności od rodzaju uśpienia z reakcją na sygnały (S) lub bez reakcji (D), wstrzymany (T), proces uszkodzony (Z). Dodatkowo wątki jądra mogą wykazywać stan bezczynności (I).*
-
-`ps -o pid,stat`
-
-***
-
-#### 2. Jakie warunki muszą być spełnione aby wątek procesu mógł uzyskać przydział jednostki przetwarzającej?
-(testowe)
-
-Przydzielana jednostka musi być aktywna, a wątek musi być w stanie gotowym do wykonania
-
-***
-
-#### 3. Jaka jest charakterystyka jednowątkowego procesu ograniczonego wejściem-wyjściem a jaka procesu ograniczonego procesorem? 
-(testowe)
-
-Proces ograniczony wejściem-wyjściem będzie często zwalniał przydzieloną mu jednostkę
-przetwarzającą, bo **ponad połowę** swojego czasu życia spędza w stanie zablokowanym. Wątek ograniczony procesorem będzie za to spędzał większą część czasu w dowolnym z dwóch pozostałych stanów - gotowym do wykonania lub wykonywanym.
-
-***
 
 #### 4. Do czego służy klasyfikacja procesów na ograniczone procesorem i ograniczone wejściem wyjściem oraz na jakiej podstawie zweryfikowano, że proces jest ograniczony wejściem-wyjściem? - weryfikacja przygotowanych w listingach obliczeń i wskazanie w nich wirtualnego czasu życia procesu realizującego odczyty z dysku /dev/sda.
 
+Procesy realizują **zadania**. Jeden wątek to jedno zadanie
 Klasyfikujac procesy możemy usprawnić przetwarzanie zadań przez proces poprzez dostosowanie przydziału jednostek przetwarzających lub zmianę polityki szeregowania.
 
-Proces ograniczony procesorem zwykle czeka na jednostkę przetwarzającą, proces ograniczony w-w na odczyt i zapis - na przykład oprecaje dyskowe.
+Proces ograniczony procesorem zwykle czeka na jednostkę przetwarzającą, proces ograniczony w-w na **operacje wejścia-wyjścia** odczyt i zapis - na przykład oprecaje dyskowe. Możemy je przyspieszyć zmianą klasy(`ionice -c`) lub priorytetu (`ionice -n`) kiedy używamy algorytmu windy **bfq**
+
+Nie zawsze możemy przyśpieszyć wykonywanie zadania. Na przykład kiedy czekamy na użytkownika, to go nie przyspieszymy.
+
+Eksperyment:
+```bash
+echo bfq > /sys/block/sda/queue/scheduler
+cat /sys/block/sda/queue/scheduler
+
+time perf sched record ionice -c 1 -n 0 dd if=/dev/sda of=/dev/null bs=1G count=100
+pidof dd #tu: 6479
+perf sched latency -p |grep -E "Task|dd:6479"
+
+# 100 * (real - (Runtime(s) + (count * Avg delay(s)))) / real
+echo "scale=3; 100 * (28.919 - (11.966 + (3466 * 0.000026))) / 28.919" | bc
+
+```
+**Czas wirtualny życia procesu** liczymy ze wzoru vruntime = runtime * (NICE_0_WEIGHT / process_weight). Jednak dla nice = 0 jest to po prostu runtime. Jest to czas w stanie wykonywanym, czyli czas realizacji zadania czas w jakim kod programu był wykonywany.
 
 ***
 
 #### 5. Co reprezentuje wartość %cpu dla procesu jednowątkowego? - dla jakiego procesu wartość %cpu może przekroczyć 100%? - wymagane zaprezentowanie %cpu dla procesu jednowątkowego w listingu.
 
+**%cpu** reprezentuje procentowy udział czasu procesora (CPU) wykorzystanego przez proces w stosunku do całkowitego dostępnego czasu CPU
+
+```bash
+dd if=/dev/sda of=/dev/null bs=1G count=100 &
+ps -o pid,cmd,%cpu -p <PID>
+    PID CMD                         %CPU
+  58215 dd if=/dev/sda of=/dev/null 48.0
+
+```
+
 ***
 
 #### 6. Co reprezentuje wartość %mem dla procesu? - wymagane wykazanie w listingach wartości, na bazie których %mem jest wyliczany, czy wartość %mem może przekroczyć 100%? - wymagane zaprezentowanie %mem dla procesu jednowątkowego w listingu.
-
-***
-
-#### 7. Z jakich obszarów składa się pamięć wirtualna procesu i czy one ze sobą bezpośrednio sąsiadują zgodnie z adresacją logiczną?
-(testowe)
-
-Pamięć wirtualna procesu składa się z segmentów pamięci, które z kolei podzielone są na strony pamięci. Nie muszą sąsiadować ze sobą, bezpośrednio, jednak muszą występować w określonej kolejności. Każdy z obszarów pamięci ma przypisane uprawnienia zależne od segmentu procesu, do jakiego należy *(co było już wykazywane w odpowiedzi z zadania 2 - polecenie `pmap`)*
 
 ***
 
@@ -168,3 +161,4 @@ ps -o
     maj_flt	#Liczba dużych page faultów
     min_flt	#Liczba małych page faultów
 ```
+

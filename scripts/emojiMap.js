@@ -205,7 +205,8 @@ const emojiMap = {
   ':briefcase:': '💼',
   ':card_file_box:': '🗃️',
   ':file_cabinet:': '🗄️',
-  ':wastebasket:': '🗑️' 
+  ':wastebasket:': '🗑️', 
+  ":skull:": "💀"
 };
 
 // Eksport mapy dla użycia w innych plikach
