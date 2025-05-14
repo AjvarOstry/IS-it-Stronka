@@ -48,7 +48,7 @@ ps -o pid,cmd,%cpu,%mem -p <PID>
 
 odnosi się tylko do pamięci fizycznej (RAM). Proces może jednak zaalokować znacznie więcej pamięci wirtualnej, co nie wpływa na %mem.
 ```bash
-### listing do zadania 6, 9, 10, 12 ###
+### Eksperyment do zadania 6, 9, 10, 12 ###
 pmap -x 20754
 20754:   dd if=/dev/sda of=/dev/null bs=1G count=100
 Address           Kbytes     RSS   Dirty Mode  Mapping
@@ -190,9 +190,24 @@ Inody: razem: 196608     wolnych: 194206
 
 #### 21. Z jakiego obszaru pamięci ulotnej wybierane są niepuste ramki i jakie kryteria musi spełniać ramka wybrana przez algorytm wymiany? - analiza wyników free –w dotycząca różnicy w wartościach pomiędzy kolumną free i available w wierszu mem. 
 
+**free** - pamięć zupełnie nieużywana (wolne ramki)
+**available** - pamięć, którą można odzyskać przez swapowanie. Są to ramki zawierające dane lub nieużywane ostatnio `inactive`
+
+
+```bash
+### Eksperyment do zadania 21 ###
+free -w
+               total        used        free      shared     buffers       cache   available
+Mem:         8088032     1900724     5255492        7752        7376     1300784     6187308
+Swap:        8087548           0     8087548
+```
 ***
 
 #### 24. Jakie zasoby systemowe trzeba monitorować i jakie działania można podjąć aby procedura OOM nie była zastosowana? - wymagane zaprezentowanie odpowiednich wartości w listingach.
+
+Powinniśmy monitorować ilość wolnych ramek w pamięci i zajętość przestrzeni wymiany swap (dochodzi do zapełnienia przestrzeni wymiany, system operacyjny nie ma gdzie wymiatać stron). 
+alternatywnie: Musimy patrzeć na wartość available, im mniejsza tym gorzej (ale nigdy nie będzie 0) i jak swap used będzie się zbliżało do total.
+
 
 ***
 
@@ -238,5 +253,9 @@ ps -o
     policy	#Polityka planowania
     maj_flt	#Liczba dużych page faultów
     min_flt	#Liczba małych page faultów
+
+    cat /proc/self/maps | grep heap
+
+
 ```
 
