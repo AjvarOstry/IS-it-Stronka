@@ -130,5 +130,22 @@ Te dane mogą już trafić np. na Node 0 lub domyślny node jądra.
 #### 22. Wykazać z wykorzystaniem wybranego testu obciążeniowego NUMA, że przetwarzanie z wykorzystaniem zasobów systemowych jednego węzła może być efektywniejsze niż w przypadku przetwarzania z zastosowaniem zasobów z kilku/wszystkich węzłów NUMA. - wymagane zaprezentowanie listingów
 
 ```bash
+sudo numademo 300m memset
+memory interleaved on all nodes memset    Avg 10281.50 MB/s Max 27664.48 MB/s Min 4708.89 MB/s
+memory on node 0 memset                   Avg 11160.88 MB/s Max 27408.97 MB/s Min 4688.89 MB/s
+memory on node 1 memset                   Avg 11853.58 MB/s Max 28069.31 MB/s Min 4645.34 MB/s
+memory on node 2 memset                   Avg 21310.64 MB/s Max 26893.46 MB/s Min 7833.96 MB/s
+...
+memory interleaved on 0 1 2 memset        Avg 15841.11 MB/s Max 27591.68 MB/s Min 4675.65 MB/s # no nie wykazaliśmy XD
+#interleaved to jest przeplatany
+```
 
+Dla 3 węzłów średnia prędkość jest niższa niż dla jednego węzła, 
+jest to spowodowane  opóźnieniem które wywołuje transfer danych
+
+ta cała prędkość to chyab "Predkosc dostepu do pamieci" / 
+"średnia przepustowość operacji zapisu do pamięci" / "średnia wydajność operacji zapisu 
+
+Korzyść: ograniczając się do jednego węzła nie zachodzi transfer
+ danych pomiędzy węzłami przez szyne interconnect które generuje opóźnienie
 ***
