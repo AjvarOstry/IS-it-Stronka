@@ -1,6 +1,4 @@
-# Sysodpowiedzi 4
-
-### 4.1
+# Sysodpowiedzi 4.1
 
 #### 4. Do czego służy klasyfikacja procesów na ograniczone procesorem i ograniczone wejściem wyjściem oraz na jakiej podstawie zweryfikowano, że proces jest ograniczony wejściem-wyjściem? - weryfikacja przygotowanych w listingach obliczeń i wskazanie w nich wirtualnego czasu życia procesu realizującego odczyty z dysku /dev/sda.
 
@@ -32,24 +30,25 @@ echo "scale=3; 100 * (28.919 - (11.966 + (3466 * 0.000026))) / 28.919" | bc
 
 **%cpu** reprezentuje procentowy udział czasu procesora (CPU) wykorzystanego przez proces w stosunku do całkowitego dostępnego czasu CPU, w skrócie **stosunek wirtualnego życia procesu do rzeczywistego**
 
+Może przekroczyć 100%, kiedy sumaryczny czas wirtualny wątków procesu jest większy od czasu rzeczywistego życia procesu
+
 ```bash
 ### Eksperyment do zadania 5 i 6 ###
 dd if=/dev/sda of=/dev/null bs=1G count=100 &
 ps -o pid,cmd,%cpu,%mem -p <PID> 
-    PID CMD                         %CPU
-  58215 dd if=/dev/sda of=/dev/null 48.0
 
 ```
 ***
 
 #### 6. Co reprezentuje wartość %mem dla procesu? - wymagane wykazanie w listingach wartości, na bazie których %mem jest wyliczany, czy wartość %mem może przekroczyć 100%? - wymagane zaprezentowanie %mem dla procesu jednowątkowego w listingu.
 
-**%mem** to procentowy udział pamięci fizycznej (RAM) zajętej przez proces w stosunku do całkowitej dostępnej pamięci fizycznej w systemie.
+**%mem** to procentowy udział pamięci fizycznej (Zbioru roboczego procesu) zajętej przez proces w stosunku do całkowitej dostępnej pamięci fizycznej w systemie. 
 
 odnosi się tylko do pamięci fizycznej (RAM). Proces może jednak zaalokować znacznie więcej pamięci wirtualnej, co nie wpływa na %mem.
+
 ```bash
 ### Eksperyment do zadania 6, 9, 10, 12 ###
-pmap -x 20754
+pmap -x 20754 #poprawić na -X
 20754:   dd if=/dev/sda of=/dev/null bs=1G count=100
 Address           Kbytes     RSS   Dirty Mode  Mapping
 0000560d99d91000      40      40       0 r-x-- dd #segment z pliku
@@ -87,14 +86,17 @@ free -k
 Mem:         8088064     2471308     1270548        7736     4773384     5616756 
 Swap:        8087548         764     8086784
 ```
+free nie uwzględnia pamięci zajmowanej przez jądro w przeciwieństwie do lsmem
+
+
 ***
 
-**%mem** jest to **stosunek** fizycznej pamięci ulotnej procesu **total RSS do** fizycznej
-pamięci ulotnej systemu operacyjnego **total mem**.
+**%mem** jest to **stosunek** fizycznej pamięci ulotnej procesu **total RSS(zbioru roboczego procesu) do** fizycznej
+pamięci ulotnej systemu operacyjnego dostępnej dla procesów **total mem**.
 
 #### 9. Który z segmentów procesu zawiera stertę, a który stos i czy są one segmentami anonimowymi? - wymagane wskazanie segmentu sterty i stosu w mapie pamięci wybranego procesu.
 
-**Stos ([ stack ]):**
+~~**Stos ([ stack ]):**
 - Zawsze oznaczony jako [ stack ] w pmap lub /proc/[pid]/maps.
 - Ma uprawnienia rw--- (odczyt i zapis, bez wykonywania).
 - Zazwyczaj ma rozmiar od kilkudziesięciu KB do kilku MB (domyślny limit stosu to 8 MB, ale używana jest tylko część).
@@ -104,7 +106,9 @@ pamięci ulotnej systemu operacyjnego **total mem**.
 - Ma uprawnienia rw---, bo jest modyfikowalna.
 - Zwykle znajduje się w niższych adresach niż stos, ale powyżej segmentów kodu i danych programu (np. 0x55d... lub 0x7f...).
 - Rozmiar zależy od programu: proste programy (np. dd) mają małą stertę (kilkaset KB), a aplikacje takie jak przeglądarki mogą mieć sterty rzędu GB.
-Uwaga: Duże segmenty [ anon ] (np. 1 TB w Twoim przykładzie) mogą być rezerwacjami przestrzeni adresowej, a nie stertą. Sterta jest zwykle mniejsza i rośnie dynamicznie.
+Uwaga: Duże segmenty [ anon ] (np. 1 TB w Twoim przykładzie) mogą być rezerwacjami przestrzeni adresowej, a nie stertą. Sterta jest zwykle mniejsza i rośnie dynamicznie.~~
+
+Segmenty są anonimowe, ponieważ nie są wczytywane z pliku
 
 
 **Kolejność w typowym układzie pamięci**
@@ -121,7 +125,12 @@ W 64-bitowym Linuksie (x86_64) przestrzeń adresowa procesu jest zorganizowana o
 
 #### 10. Czy całość jego kodu i danych jest wczytywana z pliku programu ELF oraz plików bibliotek ELF do fizycznej pamięci ulotnej?  - wymagane zaprezentowania odpowiednich wartości dla przykładowego nieanonimowego segmentu danych i segmentów tekstu w listingu z mapą pamięci procesu jednowątkowego, gdzie nie wszystkie strony segmentu są załadowane do ramek.
 
+Wskazać nieanonimowe segmenty r-- lub rw-(dane) oraz r-x(text) co mają większe Kbytes niż RSS - czyli nie są cąłe wczytane do pamięci ulotnej
+
 Część kodu nie pochodzi ani z pliku progrmu ELF, ani z bibliotek, ale z **segmentów anonimowych**, które reperezentują na przykład pamięć alokowaną dynamicznie jak sterta, czy ten bufor.
+
+Co wyraża wartość rss? jakie strony?
+Strony tego danego segmentu
 
 Alternatywna wersja rozumienia tego pytania:
 Tylko aktualnie niezbędne fragmenty kodu programu i bibliotek są ładowane do pamięci, na przykład biblioteka `libc`
@@ -137,6 +146,8 @@ Pamięć wirtualna (Kbytes, łączny rozmiar stron) jest większa od fizycznej (
 
 **Rozmiar stron:** total Kbytes - pamięć, do której proces ma dostęp. Może być większa od pamięci fizycznej ulotnej
 **Rozmiar ramek:** total RSS -  nie uwzględnia swap, ale uwzględnia pamięć bibliotek współdzielonych, czyli pokazuje tylko aktualny stan ramek w pamięci fizycznej. Do ramki załadowane są tylko potrzebne strony
+
+**Błąd braku strony**
 
 ***
 
@@ -158,9 +169,10 @@ which nano
 cp /usr/bin/nano /home/sysop/nano
 file /home/sysop/nano 
 /home/sysop/nano: ELF 64-bit LSB pie executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, BuildID[sha1]=234eb7d3646eff02d31a29c4176f223f55eb89d8, for GNU/Linux 3.2.0, stripped
+#terminal 2
 /home/sysop/nano 
 
-#terminal 2
+#terminal 1
 pidof nano
 22570
 stat -f /home
@@ -258,4 +270,3 @@ ps -o
 
 
 ```
-

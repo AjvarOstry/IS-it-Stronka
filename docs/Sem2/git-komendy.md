@@ -34,7 +34,7 @@ git checkout <nazwa_brancha> #przełaczamy się na dany branch
 #### Łączenie
 ```bash
 #robimy checkout do brancha do którego chcemy zmergeować...
-git <merge nazwa brancha z ktorego mergeujemy> #łączymy branche
+git merge <nazwa brancha z ktorego mergeujemy> #łączymy branche
 ```
 ### Commity i stage :arrow_up:
 
