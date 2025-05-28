@@ -29,25 +29,26 @@ Te dwa procesy trafiają do 2 różnych kolejek na 2 różnych poziomach co wyni
 
 **Priorytet statyczny rtprio** - w planowaniu wielokolejowym, USTALA POZIOM KOLEJKI,  do której trafia wątek w stanie gotowym do wykonania w oczekiwaniu na przydział jednostki przetwarzając
 
-    Czy można wyłączyć wszystkie jednostki przetwarzające? 
+**Zajęciowe:**
+Czy można wyłączyć wszystkie jednostki przetwarzające? 
     Nie, bo by nie było przetwarzania
 
-    Jaki cel wyłączenia jednostek?
+Jaki cel wyłączenia jednostek?
     żeby zapewnić rywalizację o jednostkę przetwarzającą
 
-    Żeby był lepszy przydział - wyższy priorytet niezależnie od polityki
+Żeby był lepszy przydział - wyższy priorytet niezależnie od polityki
 
-    Rtprio ustala poziom kolejki
+Rtprio ustala poziom kolejki
 
-    Ten, który ma wyższy priorytet ma krótszy kwant czasu, ale częściej
+Ten, który ma wyższy priorytet ma krótszy kwant czasu, ale częściej
 
-    Drugi może korzystać, kiedy pierwszy zwolni jednostkę przez zablokowanie lub zakończenie zadania
+Drugi może korzystać, kiedy pierwszy zwolni jednostkę przez zablokowanie lub zakończenie zadania
 
 
-    2. korzystniejszy przydział otrzymał wyższy priorytet
-    3. rtprio reprezentuje poziom kolejki
+2. korzystniejszy przydział otrzymał wyższy priorytet
+3. rtprio reprezentuje poziom kolejki
 
-    5. jeżeli ten o wyższym przejdzie w tan zablokowany lub się zakończy
+5. jeżeli ten o wyższym przejdzie w tan zablokowany lub się zakończy
     
 
 ***
@@ -60,20 +61,21 @@ Te dwa procesy trafiają do 2 różnych kolejek na 2 różnych poziomach co wyni
 ps -o pid,tty,etime,cmd,policy,rtprio,pcpu,cputime -C yes
 killall -v yes
 ```
-    rr - round robin - algorytm cykliczny karuzelowy
-    Czy trafiły do tej samej kolejki?
-    Nie - dwie różne kolejki tego samego poziomu - różnią się alogrytmem szeregowania
+**Zajęciowe:**
+rr - round robin - algorytm cykliczny karuzelowy
+Czy trafiły do tej samej kolejki?
+Nie - dwie różne kolejki tego samego poziomu - różnią się alogrytmem szeregowania
 
-    Dlaczego korzystniejszy przydział?
-    Bo brak wywłaszczeń fcfs -> round robin (wywłaszczenie - wymuszone przełaczenie kontekstu)
+Dlaczego korzystniejszy przydział?
+Bo brak wywłaszczeń fcfs -> round robin (wywłaszczenie - wymuszone przełaczenie kontekstu)
 
-    korzystniejszy jest algrytm fcfs, bo nie obsługuje wywłaszczenia
-        może przekazać przez dobrowolne przełączenie kontekstu.
+korzystniejszy jest algrytm fcfs, bo nie obsługuje wywłaszczenia
+może przekazać przez dobrowolne przełączenie kontekstu.
     
-    w rr wywłaszczenie występuje, kiedy skończy się przydzielony kwant czasu
+w rr wywłaszczenie występuje, kiedy skończy się przydzielony kwant czasu
 
-    co jak weźmiemy fifo 99 stress  i rr mniej
-        system się zatrzyma, bo zadania jądra ne będą się wykonywać. (niektóre zadania jądra mają 4)
+co jak weźmiemy fifo 99 stress  i rr mniej
+ system się zatrzyma, bo zadania jądra ne będą się wykonywać. (niektóre zadania jądra mają 4)
 
 Te dwa procesy trafiają do 2 różnych kolejek oraz maja ten sam poziom kolejki.
 Kolejki różnią się tym, że dla procesu o polityce szeregowania SCHED_FIFO 
@@ -119,16 +121,19 @@ chrt -r 4 yes Przypadek3 > /dev/null & chrt -d -T 10000 -D 80000 -P 95000 0 yes 
 ps -o pid,tty,etime,cmd,policy,rtprio,pcpu,cputime -C yes
 killall -v yes
 ```
-    //To zależy od czasu przydziału jednostki przetwarzającej
+**Zajęciowe:**
+//To zależy od czasu przydziału jednostki przetwarzającej
     Od dobranych parametrów
     
-    Deadline gwarantuje przydział
+Deadline gwarantuje przydział
     Co się musi odbyć w okresie rozliceniowym?
     Przydział musi się odbyć w okresie - przed linią krytyczną
 
-    Deadline oznacza linię krytyczną, do kiedy całościowy przydział musi się odbyć
+Deadline oznacza linię krytyczną, do kiedy całościowy przydział musi się odbyć
     Deadline regulujemy przerwy między przydziałami
 
+Kiedy system nie jest w stanie zagwarantować to nie obsłuży deadline w ogóle
+Bo deadline gwarantuje przydział
 
 
 Parametry:
@@ -161,17 +166,19 @@ parametrach ma to w pizdzie i leci po milion
 
 6. reguła arbitrażu
 
-    1. Polityki numa - liczba mnoga
-    2. reguły koliacji 
-    3. rtprio
-        czy zawsze?
-            SCHED_DEADLINE - bo to zależy od parametrów
-    4. polityka szeregowania
-    5. **poziom** uprzejmości nice
-        Honorowane przez Bash i Other
-    6. reguła arbitrażu
 
-    Zasada, która mówi, że jak jest zasób to należy go przyznać?
+**Zajęciowe:**
+1. Polityki numa - liczba mnoga
+2. reguły koliacji 
+3. rtprio
+    czy zawsze?
+        SCHED_DEADLINE - bo to zależy od parametrów
+4. polityka szeregowania
+5. **poziom** uprzejmości nice
+        Honorowane przez Bash i Other
+6. reguła arbitrażu
+
+Zasada, która mówi, że jak jest zasób to należy go przyznać?
         Nie może być złamana zasada natychmiastowości przydziału
     
 
