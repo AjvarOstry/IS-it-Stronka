@@ -131,6 +131,7 @@ Część kodu nie pochodzi ani z pliku progrmu ELF, ani z bibliotek, ale z **seg
 
 Co wyraża wartość rss? jakie strony?
 Strony tego danego segmentu
+ > Wybrane obszary ulotnej pamięci fizycznej są dzielone na ramki, obszary te nazywamy pamięcią stronicowaną. Ramki przydzielone dla procesu tworzą zbiór roboczy (zajmowana przez proces ulotna pamięć fizyczna ozn. RSS/RSZ), każda z nich zawiera jedną ze stron procesu
 
 Alternatywna wersja rozumienia tego pytania:
 Tylko aktualnie niezbędne fragmenty kodu programu i bibliotek są ładowane do pamięci, na przykład biblioteka `libc`
@@ -147,7 +148,14 @@ Pamięć wirtualna (Kbytes, łączny rozmiar stron) jest większa od fizycznej (
 **Rozmiar stron:** total Kbytes - pamięć, do której proces ma dostęp. Może być większa od pamięci fizycznej ulotnej
 **Rozmiar ramek:** total RSS -  nie uwzględnia swap, ale uwzględnia pamięć bibliotek współdzielonych, czyli pokazuje tylko aktualny stan ramek w pamięci fizycznej. Do ramki załadowane są tylko potrzebne strony
 
-**Błąd braku strony**
+**Błąd braku strony** 
+System będzie szukał w:
+
+- swap cache
+- w przestrzeni wymiany
+- w plikach programu / bibliotekach
+
+Zabruzona strona wymieciona do swap przestaje być zabrudzona
 
 ***
 

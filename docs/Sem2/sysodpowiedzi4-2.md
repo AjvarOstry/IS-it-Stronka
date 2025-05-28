@@ -20,6 +20,9 @@ ps -o nlwp <PID>
 **stime** - czas utworzenia wątku
 **Wątek główny** - zawsze istnieje do konca życia procesu gdyż zwraca kod błędu, więc zakończy się jako ostatni.
 
+Jądro nadaje identyfikatory
+
+
 > Wątek (tzw. lekki proces LWP ang. LightWeight Process) jest niezależnym zadaniem realizowanym w obrębie procesu lub jądra systemu posiadającym własne sterowanie wykonywaniem kodu programu. Każdy wątek posiada identyfikator SPID
 
 > Wielowątkowość - możliwość działania wielu wątków w obrębie procesu, gdzie wątki wykonują oddzielne zadania *(wykład 11)*
@@ -28,7 +31,15 @@ ps -o nlwp <PID>
 
 ***
 #### 4. Ile włókien posiada zidentyfikowany proces wielowątkowy? - odpowiedź uzasadnić, czy sytuacja będzie korzystniejsza jeżeli wszystkie wątki procesu będą włóknami? Należy ustalić najkorzystniejszy przydział jednostek przetwarzających dla procesu wielowątkowego, gdy wszystkie wątki nie są włóknami. Jaki rodzaj przetwarzania równoległego występuje dla zadań procesu złożonego tylko z włókien?
-**O chuj chodzi?**
+
+
+Nie, ponieważ zostaly zidentyfikowane przez jądro. jądro nadało mu identyfikator
+
+Korzystniej jest, kiedy wątek nie jest włóknem, bo można mu przypisać własną jednostkę przetwarzającą
+
+Włókna realizują rodzaj przetwarzania współbieżnego pseudorównoległy
+
+
 > Wątki zaimplementowane w przestrzeni jądra – jądro systemu posiada tablicę wątków, w której znajdują się dane kontrolne każdego wątku,
 wątki zaimplementowane w przestrzeni użytkownika (tzw. włókna) – struktury przechowujące stan wątków są przechowywane jedynie w przestrzeni adresowej procesu. Włókna nie są rozróżniane przez jądro systemu operacyjnego.
 Istnieje możliwość stworzenia implementacji hybrydowej, łączącej w sobie cechy implementacji wątków w przestrzeni jądra oraz użytkownika. *(wykład 11)*
@@ -53,7 +64,7 @@ Włókna przetwarzają pseudorównolegle - kilka włókien ma przydzieloną tą 
 Najkorzystniejszy przydział jednostek przetwarzających dla wielowątkowego procesu bezwłókien wynika z liczby wątków procesu, które są w stanie gotowym do wykonania lub wykonywanym (przy założeniu nie mniejszej liczby aktywnych jednostek przetwarzających).
 
 Każdy z wątków procesu, który nie jest włóknem, może uzyskać przydział co najwyżej pojedynczej, aktywnej jednostki przetwarzającej.
-W przypadku kiedy każdy wątek byłby włóknem, to moglibyśmy przydzielić tylko jedną jednostkę przetwarzającą dla całego procesu (dla wątku głównego).
+**W przypadku kiedy każdy wątek byłby włóknem, to moglibyśmy przydzielić tylko jedną jednostkę przetwarzającą dla całego procesu (dla wątku głównego).**
 
 //Kiedy wszystkie wątki są włóknami to będzie i tak wątek główny będzie rozróżnialny.
 
@@ -65,15 +76,27 @@ W przypadku kiedy każdy wątek byłby włóknem, to moglibyśmy przydzielić ty
 
 ```bash
 #### Eksperyment do zadania 13 ####
-at /proc/<PID>/status |grep switches
+# dla każdego wątku trzeba
+cat /proc/<SPID>/status |grep switches
 voluntary_ctxt_switches:	847 
 nonvoluntary_ctxt_switches:	7 #
 ```
+dobrowolne
+- zmiana stanu na zablokowany
+- rozkaz odstapienia jednostki przetwarzającej
+- zakończenie zadania
+
+mimowolne
+- 
+- 
+-
 
 **dobrowolne/nieobowiązkowe przełączenie kontekstu (voluntary)**
 występuje w następujących sytuacjach:
 - zmiany stanu procesu/wątku na zablokowywany lub wstrzymany/zatrzymany, ew. zmiana trybu przetwarzania z nieuprzywilejowanego na uprzywilejowany w stanie wykonywanym
 - wykonania rozkazu odstąpienia jednostki przetwarzającej, w wyniku wykonania którego jednostka przetwarzająca zostaje zwolniona lub zakończenia przetwarzania zadania.
+
+Co przetwarza jednostka przetwarzająca? - rozkazy, bo jest cykl rozkazowy
 
 **mimowolne/wymuszone przełączenie kontekstu (non voluntary)**
 występuje(częściej) w sytuacji, gdy:
@@ -88,12 +111,14 @@ występuje(częściej) w sytuacji, gdy:
 ***
 #### 18. Jakie ograniczenia wynikają z nadanej maski koligacji dla jednego z wątków procesu? - wymagane zaprezentowanie w listingu identyfikatorów jednostek przetwarzających jakie mogą być przyznawane dla wątku procesu ograniczonymi regułami koligacji.
 ```bash
+### MASKA MUSI BYĆ JAK W SPRAWOZDANIU
+
 pidstat -t -w -p <PID> # TID wszystkich wątków
 
 taskset -ap <PID> # wyświetlenie masek koligacji dla wszystkich wątków
 taskset –cpu-list -ap <PID> # wyświetlenie jednostek przetwarzających przypisanych do wątków
 
-taskset -p 1 <TID> # ustawienie dla jednego wątku maski koligacji 1 , co oznacza, że będzie miał on przypisaną jednostkę przetwarzającą o identyfikatorze 0
+taskset -p <nrindeksu> <TID> # ustawienie dla jednego wątku maski koligacji 1 , co oznacza, że będzie miał on przypisaną jednostkę przetwarzającą o identyfikatorze 0
 
 taskset -ap <PID>
 taskset –cpu-list -ap <PID>
@@ -116,7 +141,7 @@ numastat -p <PID> #statystyki numa dla procesu
 taskset -ap <PID> #pokazuje i ustawia maskę cpu
 taskset --cpu-list -ap <PID> #pokazuje to co wyżej, tylko jako listę rdzeni, nie maskę
 ```
-skumulowane na drugim wezle
+skumulowane na **drugim** wezle
 zeby polityka numa istniala musi byc wiecej niz 1 wezel
 
 numactl ustawia preferencje alokacji pamięci, ale:
@@ -130,15 +155,22 @@ Te dane mogą już trafić np. na Node 0 lub domyślny node jądra.
 #### 22. Wykazać z wykorzystaniem wybranego testu obciążeniowego NUMA, że przetwarzanie z wykorzystaniem zasobów systemowych jednego węzła może być efektywniejsze niż w przypadku przetwarzania z zastosowaniem zasobów z kilku/wszystkich węzłów NUMA. - wymagane zaprezentowanie listingów
 
 ```bash
-sudo numademo 300m memset
+# tu jest 350, ale musi być jak w sprawozdaniu
+sudo numademo 350m memset
 memory interleaved on all nodes memset    Avg 10281.50 MB/s Max 27664.48 MB/s Min 4708.89 MB/s
 memory on node 0 memset                   Avg 11160.88 MB/s Max 27408.97 MB/s Min 4688.89 MB/s
 memory on node 1 memset                   Avg 11853.58 MB/s Max 28069.31 MB/s Min 4645.34 MB/s
 memory on node 2 memset                   Avg 21310.64 MB/s Max 26893.46 MB/s Min 7833.96 MB/s
 ...
-memory interleaved on 0 1 2 memset        Avg 15841.11 MB/s Max 27591.68 MB/s Min 4675.65 MB/s # no nie wykazaliśmy XD
+memory interleaved on 0 1 2 memset        Avg 15841.11 MB/s Max 27591.68 MB/s Min 4675.65 MB/s 
 #interleaved to jest przeplatany
 ```
+
+opóżnienia wywołane transwerem danych między węzłami przez szynę interconnect
+
+Kto jest za to odpowiedzialny?
+jednostka przetwarzająca żeby się odwołać do komórki pamięci musi wykonać cykl rozkazowy
+cykle procesora
 
 Dla 3 węzłów średnia prędkość jest niższa niż dla jednego węzła, 
 jest to spowodowane  opóźnieniem które wywołuje transfer danych
@@ -149,3 +181,12 @@ ta cała prędkość to chyab "Predkosc dostepu do pamieci" /
 Korzyść: ograniczając się do jednego węzła nie zachodzi transfer
  danych pomiędzy węzłami przez szyne interconnect które generuje opóźnienie
 ***
+
+
+Odpowiedzi cudze:
+
+Na samym początku 1 wątek, potem nasza liczba potem sobie porownujemy
+
+Nie ma żadnych włókien, bo jądro rozróżnia wątki. nie włókna
+maks 10 wątków
+
