@@ -1,5 +1,5 @@
 # Sysodpowiedzi 4.4
-
+*
 #### 6. Jeżeli dwa procesy rywalizują o jednostkę przetwarzającą i mają identyczną politykę szeregowania SCHED_RR oraz różne wartości rtprio, to które z nich uzyska preferencję w przydziale jednostki przetwarzającej i który z nich uzyskuje korzystniejszy przydział jednostki przetwarzającej?
 
  *wymagane zaprezentowanie przypadku z rywalizacją o jednostkę przetwarzającą dwóch procesów. Kiedy wątek w stanie gotowym do wykonania, który zostanie przydzielony do kolejki na niższym poziomie (zgodnie z wielopoziomowymi kolejkami w planowaniu wielokolejkowym) uzyska przydział jednostki przetwarzającej?*
