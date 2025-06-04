@@ -43,7 +43,7 @@ Rtprio ustala poziom kolejki
 Ten, który ma wyższy priorytet ma krótszy kwant czasu, ale częściej
 
 Drugi może korzystać, kiedy pierwszy zwolni jednostkę przez zablokowanie lub zakończenie zadania
-
+kolejki na wyższych poziomach muszą być puste
 
 2. korzystniejszy przydział otrzymał wyższy priorytet
 3. rtprio reprezentuje poziom kolejki
@@ -62,6 +62,16 @@ ps -o pid,tty,etime,cmd,policy,rtprio,pcpu,cputime -C yes
 killall -v yes
 ```
 **Zajęciowe:**
+Polityki numa - liczba mnoga
+reguły koliacji
+rtprio
+czy zawsze?
+SCHED_DEADLINE - bo to zależy od parametrów
+polityka szeregowania
+poziom uprzejmości nice
+Honorowane przez Bash i Other
+reguła arbitrażu
+
 rr - round robin - algorytm cykliczny karuzelowy
 Czy trafiły do tej samej kolejki?
 Nie - dwie różne kolejki tego samego poziomu - różnią się alogrytmem szeregowania
@@ -122,28 +132,32 @@ ps -o pid,tty,etime,cmd,policy,rtprio,pcpu,cputime -C yes
 killall -v yes
 ```
 **Zajęciowe:**
-//To zależy od czasu przydziału jednostki przetwarzającej
     Od dobranych parametrów
     
+Polityki numa - liczba mnoga, reguły koliacji, rtprio
+czy zawsze? SCHED_DEADLINE - bo to zależy od parametrów
+polityka szeregowania, poziom uprzejmości nice - Honorowane przez Bash i Other
+reguła arbitrażu, zasada natychmiastowości przydziału
 Deadline gwarantuje przydział
-    Co się musi odbyć w okresie rozliceniowym?
-    Przydział musi się odbyć w okresie - przed linią krytyczną
+Co się musi odbyć w okresie rozliczeniowym?
+Przydział musi się odbyć w okresie - przed linią krytyczną
 
 Deadline oznacza linię krytyczną, do kiedy całościowy przydział musi się odbyć
     Deadline regulujemy przerwy między przydziałami
 
 Kiedy system nie jest w stanie zagwarantować to nie obsłuży deadline w ogóle
-Bo deadline gwarantuje przydział
+Bo deadline gwarantuje przydział - żeby zapewnić gwarancję
 
+Między linią krytyczną, a rozpocząciem nowego przydziału, czyli między 
+kwant czasu?
+przerwa w przydziale jednostki przetwarzającej dla procesu
 
 Parametry:
 -T - wykonanie (runtime), jest to maksymalny gwarantowany czas przydziału jednostki przetwarzającej (nie dla calego zycia procesu), dla zadania w każdym z okresów rozliczeniowych
--D - termin/deadline, wyznacza linię krytyczną przed którą musi odbyć się cały przydział
+-D - termin/deadline, wyznacza linię krytyczną przed którą musi odbyć się **cały** przydział
 jednostki przetwarzającej, termin jest liczony od początku każdego okresu rozliczeniowego
--P - okres rozliczeniowy, wpływa na częstotliwość przydziału jednostki przetwarzającej dla
+-P - okres rozliczeniowy, wpływa na **częstotliwość** przydziału jednostki przetwarzającej dla
 procesu, im dłuższy okres rozliczeniowy, tym rzadziej będzie przydzielana jednostka
-
-okres rozpiczeniowy - 
 
 Proces z tą polityką SCHED_DEADLINE ma zawsze rtprio (piorytet) ustawione na 0, jednak mimo tego ma najwyższą preferencję i gwarantuje przydział jednostki przetwarzającej, jeśli ustawione są odpowiednie parametry. 
 
