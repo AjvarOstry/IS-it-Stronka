@@ -1,0 +1,80 @@
+
+5.1.2
+1. 
+ps
+pstree -p
+echo $?
+   
+Jakie rodzaje przetwarzania współbieżnego rozróżniamy ze wzgl na liczbę dostępnych jendostek
+    żeby było pseudorównolegle musi wystąpić rywalizacja
+    musi być więcej zadań niż dostępnych jednostek
+2   
+
+    warunek bezpieczeństwa i warunek żywotności 
+    b - wymaga żeby były tylko zdarzenia dopuszczalne
+    ż - wymaga,zeby w każdym zadaniu był postęp w skończonym czasie
+
+    zdarzenie dopuszczalne - Zdarzenie, które może pojawić się w określonym stanie
+    przetwarzania sekwencyjnego wątku procesu i nie narusza ustalonych reguł przetwarzania danych
+
+    specyfikacja funkcjonalna co ustala?
+
+
+    uwięzienie lub zagłodzenie nie spełnia cechy żywotności
+
+    zagłodzenie - nie ma jednostki - ciągle w stanie zablokowanym
+    uwięzienie - ma jednostkę, ale nie ma postępu - jest przetwarzany, ale nie ma postepu - na przykład pętla nieskończona
+
+    konflikt - kiedy conajmniej dwa zadania operują na jednym zasobie i jedno dokonuje modyfikacji
+    przeplot - globalny porządek wykonywania rozkazów z różnych zadań
+    hazard/wyścig - Jeżeli wykonywane współbieżnie operacje pomiędzy przetwarzanymi procesami/wątkami (m. in. konflikty) powodują,
+     że w zależności od kolejności występowania zdarzeń system operacyjny uzyska różne stany,
+
+    Przykład wyścigu
+        wyścig o wzięcie widelca?
+        wyścig między wypisaniem komunikatu
+        Jeden dotarł do bariery stał się właścicielem blokady i je odbiera - może odebrać dwa albo jeden komunikat
+        wyślij wyślij odbierz, albo wyślij odbierz wyślij
+
+        Wyścig może wystąpić, gdy 2 pierwszych filozofów osiąga bariere, w zależności który pierwszy osiągnie bariere to ten filozof będzie odbiorcą, będzie uczestnkiem
+        wszystkich spotkań zaś 2 będzie nadawcą i będą mieli różne ścieżki wykonania
+
+        x filozofów i jeden założy blokadę - ile może odebrać komunikat? <x
+        zadanie sparametryzowane
+        nr filozofa, plik wid1 i plik wid2
+        proces rodzica kończy się ostatni
+
+        procesy tworzone w tle będą uruchamiane w losowej kolejności przy każdym uruchomieniu
+
+    instrukcja shuffle odpowiada za losowanie
+
+    5.1.3
+
+
+        filozof 1 pobiera widelec 1
+
+        kiedy tworzą cykl - dowód, że doszło do zakleszczenia
+        zależności od przetrzymywania i oczekiwania łączą się w cykl
+
+        wszystkie zadania uległy zakleszczeniu
+        wystąpienie zakleszczenia dowodzi niepoprawności programu
+        złamana została zasada żywotności
+
+    Warunki konieczne wystąpienia zakleszczenia
+        nie może być wywłaszczeń - nie można siłowo odebrać widelca
+        jest wzjaemne wykluczanie - zasoby o dostępie wyłącznym
+        przetrzymywanie i oczekiwanie
+        cykl oczekiwań - który widać w grafie
+
+        cykl wyeliminowany przy zastosowaniu hierarchii zasobów
+        - zasoby wspólne o dostepie wyłącznym należy ponumerować
+        - wprowadzić regułę dostępu do tych zasobów
+            jeżeli dla zadania został przydzielony zasób, to nie będziemy mogli przydzielić zasobu o niższym numerze
+
+        Czy jest użyte dwufazowe blokowanie?
+        Tak - wskazać?!
+
+        Jakie operacje wykonuje pojedynczy filozof w pierwszej fazie?
+        próbuje podnieść oba widelce
+        konkurencyjna - dwóch filozofów sięga po jeden widelec
+        kooperacyjna - kiedy wykorzystują metody synchronizacji komunikacji na Przykład przez potok

@@ -150,6 +150,7 @@ Bo deadline gwarantuje przydział - żeby zapewnić gwarancję
 
 Między linią krytyczną, a rozpocząciem nowego przydziału, czyli między 
 kwant czasu?
+
 przerwa w przydziale jednostki przetwarzającej dla procesu
 
 Parametry:

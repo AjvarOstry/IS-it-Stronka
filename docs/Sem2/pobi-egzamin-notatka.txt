@@ -1,0 +1,3 @@
+#Notatki do egzaminu z PObi
+
+## Zależności między klasami

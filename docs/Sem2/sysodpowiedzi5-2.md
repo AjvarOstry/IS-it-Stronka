@@ -12,6 +12,8 @@ Program współbieżny - program, który może wykonywać wiele zadań jednocze�
 
 > Przetwarzanie współbieżne zbioru procesów/wątków sekwencyjnych jest ciągiem następujących kolejno stanów i zdarzeń, występujących w ramach wykonania rozkazów z różnych zadań. Dwa wątki sekwencyjne (jednego lub różnych procesów) są współbieżne, jeżeli jeden z nich rozpoczyna się przed zakończeniem drugiego. Program zawierający przynajmniej dwa wątki przetwarzające zadania współbieżnie nazywamy programem współbieżnym. Procesy mogą być przetwarzane współbieżnie, mimo że nie zostały utworzone poprzez uruchomienie jednego programu współbieżnego.
 
+
+
 ***
 2. Kryteria poprawności programu współbieżnego. 
 
@@ -59,9 +61,11 @@ może
 Czy taki konflikt wystąpi pomiędzy zadaniami przetwarzanymi sekwencyjnie?
 nie
 
+Wyścig, to kiedy komunikaty trafiają na konsolę
 
 ***
 5. Gdzie zapisane jest zadanie filozofa i jaki to jest rodzaj zadania?
+
 *tu odpalamy biblioteke filozofa*
 
 Jak to się dzieje, że mamy jedno zadanie filozofa, wydzielone w funkcji, a tych zadań powoływanych jest wiele i one się od siebie różnią?
@@ -71,6 +75,9 @@ Czy każdy parametr funkcji jest jednocześnie parametrem zadania filozofa?
 Jak to się dzieje, że pojedyncze zadanie filozofa jest przetwarzane w osobnym
 procesie?
 - przez znak & (dokładniej w podpunkcie 7)
+
+numer filozofa i pliki widelców będą zawsze unikalne
+co decyduje o kolejności tworzenia się procesów?
 
 ***
 6. W jaki sposób powoływane są procesy realizujące zadania poszczególnych filozofów i jaką mają charakterystykę?

@@ -1,0 +1,73 @@
+5.1.4
+1.
+wchodzimy do sekcji krytycznej - zakładamy blokadę wyłączną
+wychodzimy 
+3 parametr pozycyjny to deskryptor pliku widelca za pomocą execa
+jak otwieramy plik to przypisujemy mu deskryptor
+
+77
+2.
+W sekcji krytycznej przetwarzane są instrukcje - rozkazy
+
+- w danym rejonie może znajdować się jedno zadanie
+- zadanie nie może oczekiwać w nieskończoność na wejście
+- musi w skończonym czasie opuścić sekcję krytyczną
+- nie mogą występować założenia dot. szybkości przetwarzania sekcji krytycznej
+
+
+3.
+każda sekcja jest powiązana z widelcem, będzie ich tyle co filozofów
+jeden filozof korzysta z dwóch sekcji krytycznych
+są zagnieżdżone
+
+dlaczego może być wywłaszcozne? - 
+4.
+synchronizacja - został zastosowany mechanizm blokady wyłącznej
+Składa się z właściciela blokady i kolejki zadań oczekujących fifo
+niezawsze dysponuje właścicielem
+unlock - tylko wtedy, kiedy zadanie zajmuje blokadę i inne czeka w kolejce do blokady
+zwolnić blokadę może tylko aktualny właściciel
+lock - jak blokada nie ma właściciela to blokada, jak ma to do kolejki
+trylock - 
+5.
+
+
+5.1.5
+1.
+Nie zawsze będzie współbieżne zadań filozofów - może wystąpić przetwarzanie sekwencyjne zadań filozofów
+Jak usuniemy zatrzask, dalej będzie poprawny program
+Tylko zapewnia wymóg współbieżności
+2.
+Bariera jednokrotnego zastosowania
+
+3.
+udostępnia jedną operację - osiągnięcie bariery
+z licznika i kolejki zadań oczekujących 
+- nie musi być fifo - nie ma znaczenia kolejność, w jakiej opuszczają kolejkę
+
+4.
+synchronizacja - blokada wyłączna
+komunikacja - potok nieanonimowy - ma reprezentację plikową
+                komunikacja jednokierunkowa
+
+5.
+potok - synchroniczne, jednokierunkowe
+nie może być buforowania
+
+6.
+mechanizm spotkania odpowiada za synchronizację 
+
+7.
+
+
+8.
+
+
+
+
+
+
+w lipcu(1 lub 2 lipca) 4h zegarowe
+we wrześniu 3h zegarowe
+w lutym 2h zegarowe
+Jede nrozdział rozliczony

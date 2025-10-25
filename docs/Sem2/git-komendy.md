@@ -20,6 +20,23 @@ git commit -m "Wiadomosć" #robimmy commita
 
 git push origin <nazwa-brancha> #robimy pusha (wrzucamy brancha do zdalnego repo)
 ```
+### Jak zacząć?
+Jeżeli zdalne reposytorium już istnieje i chcemy stworzyć je tylko lokalnie:
+```bash
+# przenosimy się do folderu, gdzie chcemy umieścić folder repo
+git clone https://link-do.repo/tu/wklejamy
+
+# a tak klonujemy jak chcemy zaciągnąć tylko 1 brancha
+git clone -b nazwa_branch --single-branch
+```
+W przeciwnym razie zakładamy zdalne repo:
+```bash
+# w folderze, który będzie repo
+git init
+git remote add origin https://link-do.repo/tu/wklejamy
+git push -u origin main
+```
+
 ### Branche 🪴
 
 #### Nowy branch:
@@ -31,6 +48,11 @@ git checkout -b <nazwa nowego brancha> #i od razu jesteśmy jeszcze przełączen
 git branch #sprawdzamy na jakim branchu jesteśmy
 git checkout <nazwa_brancha> #przełaczamy się na dany branch
 ```
+#### Porównywanie:
+```bash
+git diff branch1..branch2
+```
+
 #### Łączenie
 ```bash
 #robimy checkout do brancha do którego chcemy zmergeować...
@@ -61,4 +83,16 @@ git push origin --tags #albo pushujemy wszystkie tagi na raz
 .gitignore #w katalogu głównym repo. Tu dorzucamy ścieżki do plików/katalogów, które mają yć ignorowane. (Działa * i **)
 
 .gitkeep #pusty plik, który powoduje, że git widzi pusty katalog
+```
+
+### Użytkownik:
+#### Ustawianie nazwy użytkownika i email:
+```bash
+# w folderze z repo
+git config user.name "Twoje Imię"
+git config user.email "twoj@email.com"
+
+# jeżeli chcemy to zrobić dla wszystkich repo na urządzeniu 
+# dodajemy parametr --global np.:
+git config --global user.name "Twoje Imię"
 ```
