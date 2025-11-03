@@ -1,5 +1,10 @@
 # Jest Git
 
+Taki cheatsheet podstawowych komend do obługi repo. 
+
+Rozwijam to na bieżąco i pracuję nad drugą częścią, która trochę wyjaśnia jaką strategię warto przyjąć podczas pracy pod nagłówkiem [Filozofia GITa](#filozofia-gita).
+
+## Cheatsheet
 ### Szybka, rutynowa obsługa :sunglasses: :
 
 **(Szczegóły są niżej :arrow_down:, tu szybka fiszka)**
@@ -17,6 +22,8 @@ git pull origin <nazwa-brancha> #robimy pulla (zaciągamy brancha ze zdalnego re
 git status #sprawdzamy co mamy w stageu
 git add * #dodajemy wszystkie zmiany do commita
 git commit -m "Wiadomosć" #robimmy commita
+
+git merge <nazwa-brancha> #jeżeli chcemy połączyć branch z innym
 
 git push origin <nazwa-brancha> #robimy pusha (wrzucamy brancha do zdalnego repo)
 ```
@@ -58,6 +65,30 @@ git diff branch1..branch2
 #robimy checkout do brancha do którego chcemy zmergeować...
 git merge <nazwa brancha z ktorego mergeujemy> #łączymy branche
 ```
+#### Rebase
+```bash
+# Najpierw robimy checkout na brancha, którego rebase chcemy zrobić
+git rebase
+```
+**Ale ale**, czym w ogóle jest rebase?
+Otóż jak mamy jakąś gałąź na przykład dupa i ona ma jakieś commity (A, B).
+```
+dupa -- A -- B
+```
+I robimy sobie brancha po commicie(będę kreatywny, nazwę go dupa2) B i na nim kilka commitów (C i D). Ale ktoś robi sobie commity na tym głównym branchu albo mergeuje do niego commity z innego brancha (E i F).
+```
+dupa -- A -- B -- E -- F
+             \
+         dupa2 \-- C -- D
+```
+No i się nam robi takie drzewko. I chcemy sobie dalej dokładać commity do dupa2, ale chcemy to robić na aktualnym kodzie z głównego brancha. Więc robimy `git rebase dupa` na branchu dupa2 i wtedy bam:
+```
+dupa -- A -- B -- E -- F
+                        \
+                    dupa2 \-- C -- D
+```
+Nasze commity przesuwają się na wierzch i wsystko jest tak, jakbyśmy robili nasze zmiany na dupa2 już po commicie F
+
 ### Commity i stage :arrow_up:
 
 #### Tworzenie commita:
@@ -96,3 +127,8 @@ git config user.email "twoj@email.com"
 # dodajemy parametr --global np.:
 git config --global user.name "Twoje Imię"
 ```
+
+
+## Filozofia GITa
+
+Legendy głoszą, że tu kiedyś coś będzie
