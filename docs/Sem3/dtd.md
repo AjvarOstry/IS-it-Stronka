@@ -61,6 +61,7 @@ I teraz mamy różne dostępne **typy atrybutów**:
 I różne **reguły obowiązkowości**:
 - `#REQUIRED` - atrybut wymagany
 - `#IMPLIED` - opcjonalny
+- `"wartość domyślna"` - to znaczy, że jak nic nie będzie wpisane, to pojawi się to
 - `#FIXED "wartość"` - ma stałą, niezmienialną wartość
 - brak - zwykle działa jak `#IMPLIED`, ale lepiej pisać to `#IMPLIED`
 
@@ -72,3 +73,27 @@ Można sobie grupować te atrybuty. Np.:
 >
 ```
 
+## Encje
+
+Encje to są takie rzeczy jak `&amp`. Po prostu zamienia nam encję na konkretną podaną przez nas wartość. Na przykład jak zrobimy:
+
+
+### Encja ogólna
+
+```dtd
+<!ENTITY dupa "dział usprawniania papierologii analitycznej">
+```
+
+i w XMLu napiszemy sobie `dupa`, to wyświetli się nam `dział usprawniania papierologii analitycznej`.
+
+
+### Encja parametryczna
+
+To jest taka rzecz typowo w DTD. Jak powtarzają nam się jakieś elementy albo atrybuty, to definiujemy je sobie raz:
+```dtd
+<!ENTITY % nazwa_encji "element1, element2, element3">
+```
+I potem używamy tak:
+```dtd
+<!ELEMENT nazwa (%nazwa_encji, inne_podelementy)>
+```
