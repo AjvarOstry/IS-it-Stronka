@@ -29,12 +29,18 @@ W przypadku elementów pustych np `<element/>` robimy coś takiego:
 <!ELEMENT element EMPTY>
 ```
 
-Przy czym:
+### Separatory:
+- `,` np. `<!ELEMENT nazwa_elementu (podelement1?, podelement2>` - podelementy muszą wystąpić w podanej kolejności
+- `|` np. `<!ELEMENT nazwa_elementu (podelement1?,  podelement2, | podelement3+>` - lub, czyli wystąpią dwa pierwsze podelementy lub ostatni
+
+### Określenie liczności elementów
 
 - `podelement+` - przynajmniej jeden taki musi być w środku
 - `track*` - zero lub więcej takich elementów musi być w środku
 - `lastModified?` - element opcjonalny, ale może być max 1
 - `podelement` - element musi wystąpić dokładnie raz
+
+**Uwaga!** Jeżeli znaczek jest za całą grupą elementów `(a, b)+`. To znaczy, że w xml powtarza się to a i b **jako cały zestaw**
 
 ## Dodawanie atrybutów
 
@@ -57,4 +63,12 @@ I różne **reguły obowiązkowości**:
 - `#IMPLIED` - opcjonalny
 - `#FIXED "wartość"` - ma stałą, niezmienialną wartość
 - brak - zwykle działa jak `#IMPLIED`, ale lepiej pisać to `#IMPLIED`
+
+Można sobie grupować te atrybuty. Np.:
+
+```dtd
+<!ATTLIST nazwa_elementu nazwa_atrybutu ID #REQUIRED
+                         nazwa_atrybutu2 CDATA #IMPLIED
+>
+```
 
