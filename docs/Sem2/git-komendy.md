@@ -40,8 +40,10 @@ W przeciwnym razie zakładamy zdalne repo:
 ```bash
 # w folderze, który będzie repo
 git init
-git remote add origin https://link-do.repo/tu/wklejamy
-git push -u origin main
+git commit -m "pierwszy commit"   # pierwszy commit
+git branch -M main                # opcjonalnie - zmieniamy nazwę głównej gałęzi na main
+git remote add origin https://link-do.repo/tu/wklejamy # podłączamy remote(zdalne repo)
+git push -u origin main # robimy pusha
 ```
 
 ### Branche 🪴
