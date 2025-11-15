@@ -34,9 +34,9 @@ Intellij domyślnie tworzy już pom.xml z częścią wartości za nas. Jednak du
     
     <developers> <!--Tu wrzucamy info o devach-->
         <developer>
-            <id>254765</id>
-            <name>Wojciech Iszczak</name>
-            <email>254765@edu.p.lodz.pl</email>
+            <id>nr indeksu np</id>
+            <name>Autor projektu</name>
+            <email></email>
         </developer>
     </developers>
 
