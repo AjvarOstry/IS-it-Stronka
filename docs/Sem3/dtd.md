@@ -73,6 +73,11 @@ Można sobie grupować te atrybuty. Np.:
 >
 ```
 
+A jak chcemy enuma, to enum będzie wyglądał tak:
+```dtd
+<!ATTLIST person gender (man | woman) #REQUIRED>
+```
+
 ## Encje
 
 Encje to są takie rzeczy jak `&amp`. Po prostu zamienia nam encję na konkretną podaną przez nas wartość. Na przykład jak zrobimy:
